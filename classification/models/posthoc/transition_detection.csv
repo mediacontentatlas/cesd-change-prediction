@@ -1,0 +1,4 @@
+transition,n_cases,caught,sensitivity
+min→mod,20,15,0.75
+min→sev,9,9,1.0
+mod→sev,8,7,0.875

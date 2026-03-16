@@ -1,0 +1,49 @@
+label,condition,model,TP_imp,FP_imp,TP_stb,FP_stb,TP_wrs,FP_wrs,cm_00,cm_01,cm_02,cm_10,cm_11,cm_12,cm_20,cm_21,cm_22
+sev_crossing,prior_cesd only,ElasticNet,32,56,237,9,22,55,32,0,12,50,237,43,6,9,22
+sev_crossing,prior_cesd only,XGBoost,42,43,201,7,27,91,42,2,0,38,201,91,5,5,27
+sev_crossing,prior_cesd only,LightGBM,41,47,197,8,27,91,41,3,0,42,197,91,5,5,27
+sev_crossing,prior_cesd only,SVM,32,48,200,7,24,100,32,2,10,40,200,90,8,5,24
+sev_crossing,base (21),ElasticNet,30,56,235,19,14,57,30,2,12,50,235,45,6,17,14
+sev_crossing,base (21),XGBoost,41,62,189,5,24,90,41,0,3,54,189,87,8,5,24
+sev_crossing,base (21),LightGBM,38,46,222,6,25,74,38,1,5,39,222,69,7,5,25
+sev_crossing,base (21),SVM,33,61,197,14,16,90,33,1,10,53,197,80,8,13,16
+sev_crossing,base + behavioral lag (38),ElasticNet,31,56,230,20,14,60,31,3,10,50,230,50,6,17,14
+sev_crossing,base + behavioral lag (38),XGBoost,42,56,208,6,23,76,42,0,2,48,208,74,8,6,23
+sev_crossing,base + behavioral lag (38),LightGBM,44,64,178,4,25,96,44,0,0,56,178,96,8,4,25
+sev_crossing,base + behavioral lag (38),SVM,32,62,201,18,17,81,32,5,7,55,201,74,7,13,17
+sev_crossing,base + behavioral lag + pmcesd (39),ElasticNet,31,47,211,13,27,82,31,4,9,46,211,73,1,9,27
+sev_crossing,base + behavioral lag + pmcesd (39),XGBoost,40,29,249,6,31,56,40,1,3,28,249,53,1,5,31
+sev_crossing,base + behavioral lag + pmcesd (39),LightGBM,41,31,241,5,32,61,41,1,2,30,241,59,1,4,32
+sev_crossing,base + behavioral lag + pmcesd (39),SVM,33,59,227,13,24,55,33,5,6,54,227,49,5,8,24
+personal_sd,prior_cesd only,ElasticNet,38,70,216,30,9,48,38,6,6,62,216,42,8,24,9
+personal_sd,prior_cesd only,XGBoost,34,60,157,25,11,124,34,3,13,52,157,111,8,22,11
+personal_sd,prior_cesd only,LightGBM,38,119,144,28,5,77,38,6,6,105,144,71,14,22,5
+personal_sd,prior_cesd only,SVM,38,70,258,45,0,0,38,12,0,62,258,0,8,33,0
+personal_sd,base (21),ElasticNet,37,66,146,19,20,123,37,6,7,58,146,116,8,13,20
+personal_sd,base (21),XGBoost,40,86,180,23,10,72,40,4,6,74,180,66,12,19,10
+personal_sd,base (21),LightGBM,33,84,164,28,8,94,33,7,10,72,164,84,12,21,8
+personal_sd,base (21),SVM,33,67,156,20,20,115,33,7,10,59,156,105,8,13,20
+personal_sd,base + behavioral lag (38),ElasticNet,36,67,144,22,17,125,36,6,8,59,144,117,8,16,17
+personal_sd,base + behavioral lag (38),XGBoost,34,85,178,27,10,77,34,7,9,74,178,68,11,20,10
+personal_sd,base + behavioral lag (38),LightGBM,40,84,167,23,11,86,40,3,7,74,167,79,10,20,11
+personal_sd,base + behavioral lag (38),SVM,33,80,133,20,19,126,33,7,10,71,133,116,9,13,19
+personal_sd,base + behavioral lag + pmcesd (39),ElasticNet,40,57,156,21,24,113,40,7,3,54,156,110,3,14,24
+personal_sd,base + behavioral lag + pmcesd (39),XGBoost,40,60,136,18,26,131,40,8,2,55,136,129,5,10,26
+personal_sd,base + behavioral lag + pmcesd (39),LightGBM,41,63,152,24,19,112,41,7,2,58,152,110,5,17,19
+personal_sd,base + behavioral lag + pmcesd (39),SVM,38,62,157,23,25,106,38,9,3,60,157,103,2,14,25
+balanced_tercile,prior_cesd only,ElasticNet,67,45,97,122,31,49,67,45,25,16,97,24,29,77,31
+balanced_tercile,prior_cesd only,XGBoost,101,101,90,92,7,20,101,29,7,34,90,13,67,63,7
+balanced_tercile,prior_cesd only,LightGBM,91,92,90,92,13,33,91,29,17,31,90,16,61,63,13
+balanced_tercile,prior_cesd only,SVM,95,104,88,72,22,30,95,19,23,42,88,7,62,53,22
+balanced_tercile,base (21),ElasticNet,65,50,90,109,32,65,65,35,37,19,90,28,31,74,32
+balanced_tercile,base (21),XGBoost,82,97,73,62,35,62,82,22,33,35,73,29,62,40,35
+balanced_tercile,base (21),LightGBM,78,86,72,63,43,69,78,22,37,33,72,32,53,41,43
+balanced_tercile,base (21),SVM,61,52,90,101,36,71,61,34,42,18,90,29,34,67,36
+balanced_tercile,base + behavioral lag (38),ElasticNet,69,53,87,98,35,69,69,30,38,19,87,31,34,68,35
+balanced_tercile,base + behavioral lag (38),XGBoost,87,91,73,61,41,58,87,21,29,35,73,29,56,40,41
+balanced_tercile,base + behavioral lag (38),LightGBM,84,89,71,62,39,66,84,21,32,32,71,34,57,41,39
+balanced_tercile,base + behavioral lag (38),SVM,69,55,80,90,45,72,69,33,35,20,80,37,35,57,45
+balanced_tercile,base + behavioral lag + pmcesd (39),ElasticNet,68,43,82,75,68,75,68,28,41,21,82,34,22,47,68
+balanced_tercile,base + behavioral lag + pmcesd (39),XGBoost,81,62,70,41,77,80,81,17,39,26,70,41,36,24,77
+balanced_tercile,base + behavioral lag + pmcesd (39),LightGBM,83,65,70,35,76,82,83,14,40,25,70,42,40,21,76
+balanced_tercile,base + behavioral lag + pmcesd (39),SVM,72,45,89,74,68,63,72,28,37,22,89,26,23,46,68

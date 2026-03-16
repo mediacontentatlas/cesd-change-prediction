@@ -1,0 +1,109 @@
+best_params:
+  base (21):
+    ElasticNet:
+      C: 0.1
+      l1_ratio: 0.9
+    LightGBM:
+      colsample_bytree: 0.8
+      learning_rate: 0.01
+      max_depth: 7
+      min_child_samples: 30
+      n_estimators: 50
+      num_leaves: 15
+      reg_alpha: 0.0
+      reg_lambda: 0.1
+      subsample: 1.0
+    SVM:
+      C: 1.0
+      gamma: 0.0001
+      kernel: linear
+    XGBoost:
+      colsample_bytree: 1.0
+      learning_rate: 0.01
+      max_depth: 3
+      min_child_weight: 1
+      n_estimators: 100
+      subsample: 0.8
+  base + behavioral lag (38):
+    ElasticNet:
+      C: 0.1
+      l1_ratio: 0.9
+    LightGBM:
+      colsample_bytree: 1.0
+      learning_rate: 0.01
+      max_depth: 3
+      min_child_samples: 30
+      n_estimators: 50
+      num_leaves: 31
+      reg_alpha: 0.0
+      reg_lambda: 0.1
+      subsample: 0.8
+    SVM:
+      C: 0.5
+      gamma: 0.01
+      kernel: rbf
+    XGBoost:
+      colsample_bytree: 0.8
+      learning_rate: 0.01
+      max_depth: 3
+      min_child_weight: 3
+      n_estimators: 200
+      subsample: 0.8
+  base + behavioral lag + pmcesd (39):
+    ElasticNet:
+      C: 0.01
+      l1_ratio: 0.99
+    LightGBM:
+      colsample_bytree: 1.0
+      learning_rate: 0.01
+      max_depth: 3
+      min_child_samples: 30
+      n_estimators: 50
+      num_leaves: 31
+      reg_alpha: 0.0
+      reg_lambda: 0.1
+      subsample: 0.8
+    SVM:
+      C: 10.0
+      gamma: 0.001
+      kernel: rbf
+    XGBoost:
+      colsample_bytree: 1.0
+      learning_rate: 0.01
+      max_depth: 3
+      min_child_weight: 1
+      n_estimators: 100
+      subsample: 1.0
+  prior_cesd only:
+    ElasticNet:
+      C: 0.005
+      l1_ratio: 0.1
+    LightGBM:
+      colsample_bytree: 0.6
+      learning_rate: 0.1
+      max_depth: 5
+      min_child_samples: 10
+      n_estimators: 100
+      num_leaves: 15
+      reg_alpha: 1.0
+      reg_lambda: 0.0
+      subsample: 0.6
+    SVM:
+      C: 5.0
+      gamma: 0.1
+      kernel: rbf
+    XGBoost:
+      colsample_bytree: 0.8
+      learning_rate: 0.05
+      max_depth: 5
+      min_child_weight: 1
+      n_estimators: 100
+      subsample: 0.8
+label_type: sev_crossing
+severity_thresholds:
+  minimal: 0-15
+  moderate: 16-23
+  severe: 24+
+train_improving: 121
+train_stable: 956
+train_worsening: 119

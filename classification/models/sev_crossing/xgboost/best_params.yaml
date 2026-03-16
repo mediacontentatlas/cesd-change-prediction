@@ -1,0 +1,23 @@
+colsample_bytree: 1.0
+excluded_lags:
+- lag_age
+- lag_gender_mode_1
+- lag_gender_mode_2
+- lag_prior_cesd
+- lag_cesd_delta
+feature_set: 21 base + 17 behavioral lag + person_mean_cesd
+gamma: 0
+learning_rate: 0.05
+max_depth: 3
+min_child_weight: 3
+n_estimators: 100
+n_features: 39
+num_class: 3
+random_state: 42
+subsample: 1.0
+test_auc: 0.915347438261545
+test_bacc: 0.7922331422331422
+test_sensw: 0.7297297297297297
+val_auc: 0.9076635875871711
+val_bacc: 0.7900352733686066
+val_sensw: 0.6571428571428571

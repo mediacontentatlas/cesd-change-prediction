@@ -1,0 +1,17 @@
+condition,n_features,model,best_params,val_BalAcc,BalAcc,AUC,Sens_W,F1_macro
+prior_cesd only,1,ElasticNet,"{'C': 0.005, 'l1_ratio': 0.1}",0.4683,0.5515,0.6946,0.2195,0.476
+prior_cesd only,1,XGBoost,"{'n_estimators': 100, 'max_depth': 3, 'learning_rate': 0.05, 'min_child_weight': 3, 'subsample': 1.0, 'colsample_bytree': 0.8}",0.4759,0.4796,0.6464,0.2683,0.4076
+prior_cesd only,1,LightGBM,"{'n_estimators': 50, 'max_depth': 5, 'learning_rate': 0.01, 'num_leaves': 63, 'min_child_samples': 10, 'subsample': 0.6, 'colsample_bytree': 0.6, 'reg_alpha': 0.1, 'reg_lambda': 0.1}",0.482,0.444,0.637,0.122,0.3446
+prior_cesd only,1,SVM,"{'C': 0.1, 'gamma': 0.0001, 'kernel': 'linear'}",0.4626,0.5221,0.6946,0.0,0.4364
+base (21),21,ElasticNet,"{'C': 0.005, 'l1_ratio': 0.1}",0.4732,0.5614,0.71,0.4878,0.4344
+base (21),21,XGBoost,"{'n_estimators': 100, 'max_depth': 3, 'learning_rate': 0.05, 'min_child_weight': 1, 'subsample': 0.8, 'colsample_bytree': 1.0}",0.4871,0.5355,0.6933,0.2439,0.4352
+base (21),21,LightGBM,"{'n_estimators': 50, 'max_depth': 5, 'learning_rate': 0.01, 'num_leaves': 31, 'min_child_samples': 30, 'subsample': 0.8, 'colsample_bytree': 1.0, 'reg_alpha': 0.1, 'reg_lambda': 0.1}",0.4941,0.4559,0.6641,0.1951,0.3826
+base (21),21,SVM,"{'C': 5.0, 'gamma': 0.001, 'kernel': 'rbf'}",0.4674,0.5451,0.7163,0.4878,0.4321
+base + behavioral lag (38),38,ElasticNet,"{'C': 0.05, 'l1_ratio': 0.99}",0.4678,0.5282,0.7083,0.4146,0.4163
+base + behavioral lag (38),38,XGBoost,"{'n_estimators': 100, 'max_depth': 5, 'learning_rate': 0.01, 'min_child_weight': 1, 'subsample': 1.0, 'colsample_bytree': 0.8}",0.4763,0.4934,0.6896,0.2439,0.4122
+base + behavioral lag (38),38,LightGBM,"{'n_estimators': 100, 'max_depth': 5, 'learning_rate': 0.01, 'num_leaves': 15, 'min_child_samples': 30, 'subsample': 1.0, 'colsample_bytree': 1.0, 'reg_alpha': 0.1, 'reg_lambda': 0.1}",0.4713,0.5301,0.684,0.2683,0.4247
+base + behavioral lag (38),38,SVM,"{'C': 1.0, 'gamma': 0.0001, 'kernel': 'linear'}",0.4684,0.513,0.6807,0.4634,0.3905
+base + behavioral lag + pmcesd (39),39,ElasticNet,"{'C': 0.1, 'l1_ratio': 0.5}",0.5976,0.6243,0.759,0.5854,0.4805
+base + behavioral lag + pmcesd (39),39,XGBoost,"{'n_estimators': 100, 'max_depth': 5, 'learning_rate': 0.01, 'min_child_weight': 3, 'subsample': 1.0, 'colsample_bytree': 1.0}",0.6099,0.6197,0.7497,0.6341,0.4566
+base + behavioral lag + pmcesd (39),39,LightGBM,"{'n_estimators': 100, 'max_depth': 5, 'learning_rate': 0.01, 'num_leaves': 15, 'min_child_samples': 30, 'subsample': 0.8, 'colsample_bytree': 1.0, 'reg_alpha': 1.0, 'reg_lambda': 0.1}",0.6235,0.5861,0.7315,0.4634,0.4554
+base + behavioral lag + pmcesd (39),39,SVM,"{'C': 5.0, 'gamma': 0.0001, 'kernel': 'linear'}",0.546,0.6201,0.7507,0.6098,0.4751

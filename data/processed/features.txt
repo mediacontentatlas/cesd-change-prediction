@@ -1,0 +1,34 @@
+# FEATURES FOR MODELING
+
+## Continuous - Unscaled:
+# (prior_cesd: clinical scale, ratios: [0,1] scale)
+  - prior_cesd
+  - active_day_ratio_delta
+  - mean_daily_overnight_ratio
+  - mean_daily_overnight_ratio_delta
+  - mean_daily_social_ratio
+  - mean_daily_social_ratio_delta
+
+## Continuous - Standardized (mean=0, std=1):
+  - age
+  - mean_daily_screens
+  - mean_daily_screens_delta
+  - mean_daily_unique_apps
+  - mean_daily_unique_apps_delta
+  - mean_daily_switches
+  - mean_daily_switches_delta
+  - switches_per_screen
+  - switches_per_screen_delta
+  - mean_daily_social_screens
+  - mean_daily_social_screens_delta
+  - clip_dispersion
+  - clip_dispersion_delta
+
+## Categorical (one-hot encoded):
+  - gender_mode_1
+  - gender_mode_2
+
+## Total: 21 features
+  - Unscaled: 6
+  - Standardized: 13
+  - Categorical (one-hot): 2

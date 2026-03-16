@@ -1,0 +1,13 @@
+colsample_bytree: 0.8
+learning_rate: 0.05
+max_depth: 3
+min_child_samples: 30
+n_estimators: 100
+num_leaves: 63
+reg_alpha: 0.1
+reg_lambda: 0.1
+subsample: 0.8
+test_auc: 0.8667348895893356
+test_bal_acc: 0.7199290199290199
+val_auc: 0.8702567381085348
+val_bal_acc: 0.7404174015285127

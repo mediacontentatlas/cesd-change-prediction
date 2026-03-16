@@ -1,0 +1,12 @@
+best_C: 0.05
+best_l1_ratio: 0.9
+k: 1.0
+label_type: personal_sd
+n_features: 43
+use_dev: false
+use_lag: true
+use_pid: false
+val_bal_acc: 0.6344372527867673
+val_f1_macro: 0.46484846837390226
+val_f1_worsening: 0.3218390804597701
+val_sens_worsening: 0.56

@@ -1,0 +1,37 @@
+AUC_lo,AUC_hi,BalAcc_lo,BalAcc_hi,SensW_lo,SensW_hi,PPVW_lo,PPVW_hi,scenario,model
+0.5,0.5,0.333,0.333,0.0,0.0,,,Population baseline,ElasticNet
+0.5,0.5,0.333,0.333,0.0,0.0,,,Population baseline,XGBoost
+0.5,0.5,0.333,0.333,0.0,0.0,,,Population baseline,LightGBM
+0.5,0.5,0.333,0.333,0.0,0.0,,,Population baseline,SVM
+0.697,0.804,0.601,0.743,0.382,0.706,0.267,0.551,Revert-to-person-mean,ElasticNet
+0.697,0.804,0.601,0.743,0.382,0.706,0.267,0.551,Revert-to-person-mean,XGBoost
+0.697,0.804,0.601,0.743,0.382,0.706,0.267,0.551,Revert-to-person-mean,LightGBM
+0.697,0.804,0.601,0.743,0.382,0.706,0.267,0.551,Revert-to-person-mean,SVM
+0.527,0.588,0.301,0.375,0.0,0.139,0.0,0.133,Last-change-only,ElasticNet
+0.527,0.588,0.301,0.375,0.0,0.139,0.0,0.133,Last-change-only,XGBoost
+0.527,0.588,0.301,0.375,0.0,0.139,0.0,0.133,Last-change-only,LightGBM
+0.527,0.588,0.301,0.375,0.0,0.139,0.0,0.133,Last-change-only,SVM
+0.541,0.665,0.341,0.45,0.0,0.0,,,Intake form only,ElasticNet
+0.667,0.766,0.385,0.532,0.289,0.617,0.103,0.252,Intake form only,XGBoost
+0.666,0.766,0.382,0.535,0.273,0.6,0.105,0.267,Intake form only,LightGBM
+0.581,0.701,0.307,0.442,0.132,0.429,0.037,0.13,Intake form only,SVM
+0.676,0.764,0.398,0.516,0.0,0.143,0.0,0.5,Onboarding,ElasticNet
+0.613,0.725,0.385,0.53,0.151,0.447,0.074,0.246,Onboarding,XGBoost
+0.566,0.686,0.38,0.518,0.151,0.447,0.07,0.24,Onboarding,LightGBM
+0.685,0.78,0.437,0.572,0.111,0.385,0.089,0.31,Onboarding,SVM
+0.64,0.744,0.445,0.594,0.324,0.65,0.11,0.268,Stale 4 weeks,ElasticNet
+0.682,0.786,0.489,0.644,0.333,0.667,0.143,0.321,Stale 4 weeks,XGBoost
+0.668,0.775,0.468,0.62,0.333,0.667,0.128,0.29,Stale 4 weeks,LightGBM
+0.68,0.781,0.436,0.582,0.276,0.6,0.111,0.278,Stale 4 weeks,SVM
+0.583,0.7,0.386,0.534,0.242,0.583,0.085,0.228,Stale 8 weeks,ElasticNet
+0.647,0.754,0.434,0.581,0.276,0.607,0.106,0.276,Stale 8 weeks,XGBoost
+0.62,0.739,0.433,0.584,0.3,0.641,0.113,0.269,Stale 8 weeks,LightGBM
+0.64,0.744,0.398,0.545,0.21,0.526,0.09,0.257,Stale 8 weeks,SVM
+0.558,0.618,0.443,0.54,0.595,0.867,0.121,0.253,No fresh CES-D,ElasticNet
+0.627,0.707,0.467,0.541,0.781,0.976,0.118,0.224,No fresh CES-D,XGBoost
+0.634,0.711,0.467,0.541,0.781,0.976,0.118,0.224,No fresh CES-D,LightGBM
+0.579,0.656,0.386,0.503,0.463,0.793,0.104,0.226,No fresh CES-D,SVM
+0.792,0.867,0.624,0.762,0.588,0.872,0.168,0.333,Full model,ElasticNet
+0.881,0.929,0.784,0.882,0.707,0.947,0.253,0.464,Full model,XGBoost
+0.876,0.925,0.798,0.89,0.744,0.97,0.247,0.439,Full model,LightGBM
+0.806,0.876,0.628,0.766,0.488,0.806,0.203,0.405,Full model,SVM

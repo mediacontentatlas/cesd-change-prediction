@@ -1,0 +1,33 @@
+# ElasticNet logistic regression classifier for mood direction prediction
+# Predicts: improving (0) / stable (1) / worsening (2)
+#
+# Label types:
+#   sev_crossing: severity boundary crossing (CESD <16 / 16-23 / >=24)
+#   thresh_5:     5-point change threshold (MCID)
+#   thresh_10:    10-point change threshold (conservative)
+
+name: classifier
+
+label:
+  type: sev_crossing    # sev_crossing | thresh_5 | thresh_10
+  sev_minor: 16         # CESD score below this = minimal symptoms
+  sev_moderate: 24      # CESD score below this = moderate, >= severe
+
+params:
+  Cs:
+    - 0.001
+    - 0.005
+    - 0.01
+    - 0.05
+    - 0.1
+    - 0.5
+    - 1.0
+    - 5.0
+
+  l1_ratios:
+    - 0.1
+    - 0.5
+    - 0.9
+    - 0.99
+
+  max_iter: 2000

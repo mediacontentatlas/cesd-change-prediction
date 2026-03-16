@@ -1,0 +1,11 @@
+best_C: 0.1
+best_l1_ratio: 0.9
+label_type: sev_crossing
+n_features: 43
+use_dev: false
+use_lag: true
+use_pid: false
+val_bal_acc: 0.7059082892416226
+val_f1_macro: 0.5676593600403125
+val_f1_worsening: 0.4081632653061224
+val_sens_worsening: 0.5714285714285714

@@ -1,0 +1,37 @@
+scenario,model,cm_00,cm_01,cm_02,cm_10,cm_11,cm_12,cm_20,cm_21,cm_22
+Population baseline,ElasticNet,0,44,0,0,330,0,0,37,0
+Population baseline,XGBoost,0,44,0,0,330,0,0,37,0
+Population baseline,LightGBM,0,44,0,0,330,0,0,37,0
+Population baseline,SVM,0,44,0,0,330,0,0,37,0
+Revert-to-person-mean,ElasticNet,27,15,2,17,286,27,0,17,20
+Revert-to-person-mean,XGBoost,27,15,2,17,286,27,0,17,20
+Revert-to-person-mean,LightGBM,27,15,2,17,286,27,0,17,20
+Revert-to-person-mean,SVM,27,15,2,17,286,27,0,17,20
+Last-change-only,ElasticNet,3,16,25,28,291,11,14,21,2
+Last-change-only,XGBoost,3,16,25,28,291,11,14,21,2
+Last-change-only,LightGBM,3,16,25,28,291,11,14,21,2
+Last-change-only,SVM,3,16,25,28,291,11,14,21,2
+Intake form only,ElasticNet,28,16,0,148,182,0,24,13,0
+Intake form only,XGBoost,13,10,21,61,209,60,14,6,17
+Intake form only,LightGBM,14,10,20,69,209,52,15,6,16
+Intake form only,SVM,12,14,18,46,192,92,15,12,10
+Onboarding,ElasticNet,23,20,1,63,260,7,21,14,2
+Onboarding,XGBoost,16,14,14,51,235,44,13,13,11
+Onboarding,LightGBM,15,13,16,53,233,44,12,14,11
+Onboarding,SVM,25,12,7,68,232,30,19,9,9
+Stale 4 weeks,ElasticNet,19,10,15,56,210,64,11,8,18
+Stale 4 weeks,XGBoost,20,7,17,44,240,46,14,4,19
+Stale 4 weeks,LightGBM,18,6,20,46,233,51,14,4,19
+Stale 4 weeks,SVM,19,9,16,62,219,49,14,7,16
+Stale 8 weeks,ElasticNet,15,11,18,58,208,64,15,7,15
+Stale 8 weeks,XGBoost,16,7,21,43,239,48,16,5,16
+Stale 8 weeks,LightGBM,16,7,21,46,231,53,16,4,17
+Stale 8 weeks,SVM,17,10,17,60,224,46,18,6,13
+No fresh CES-D,ElasticNet,0,13,31,0,243,87,0,10,27
+No fresh CES-D,XGBoost,0,6,38,0,207,123,0,4,33
+No fresh CES-D,LightGBM,0,6,38,0,207,123,0,4,33
+No fresh CES-D,SVM,1,12,31,19,224,87,3,11,23
+Full model,ElasticNet,31,4,9,46,211,73,1,9,27
+Full model,XGBoost,40,1,3,28,249,53,1,5,31
+Full model,LightGBM,41,1,2,30,241,59,1,4,32
+Full model,SVM,33,5,6,54,227,49,5,8,24
