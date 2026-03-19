@@ -15,17 +15,31 @@ All model-based scenarios (except Intake form only) use the same 39-feature XGBo
 
 4. **Intake form only** — ML model trained on 3 demographic features (age, gender_mode_1, gender_mode_2) with its own grid-searched hyperparameters. Simulates a scenario where only intake demographics are available — no CES-D history, no behavioral data. Tests the floor of ML-based prediction.
 
-5. **Onboarding** — Full 39-feature model, but at test time prior_cesd and person_mean_cesd are both set to the person's first-ever CES-D score. Simulates "first real session" — behavioral features are current, but the system has only one CES-D observation (no trajectory information, no person baseline). The person_mean_cesd anchor is unreliable with a single observation.
+5. **Onboarding** — Full 39-feature model, but at test time prior_cesd and person_mean_cesd are both set to the person's first-ever CES-D score. Simulates a "frozen CES-D" deployment: behavioral features stream continuously from Screenome as usual, but the CES-D anchor never updates past the initial intake survey. Equivalent to asking: what if we only ever administered the CES-D once? AUC = 0.670 — a meaningful drop from the full model (0.906), indicating the CES-D anchor needs to update for the behavioral features to be useful.
 
 6. **Stale 4 weeks** — Full 39-feature model, but prior_cesd comes from 1 biweekly period ago (i.e., the previous period's prior_cesd, not the current one). Simulates a missed assessment: behavioral data is current but the most recent CES-D is 4 weeks old. Tests graceful degradation when self-report lapses.
 
 7. **Stale 8 weeks** — Same as Stale 4 weeks, but prior_cesd comes from 2 periods ago (8 weeks old). Tests how far the model degrades with increasingly outdated clinical self-report.
 
-8. **No fresh CES-D** — Full 39-feature model, but prior_cesd is replaced with the population mean. Simulates a pure passive-monitoring scenario: behavioral features stream from the screenome, but the person has not completed any recent CES-D. person_mean_cesd is still available from historical data. Tests whether behavioral features alone (with person-level anchoring) carry predictive signal.
+8. **No fresh CES-D** — Full 39-feature model, but prior_cesd is replaced with the population mean (~12, minimal severity band). Simulates a pure passive-monitoring scenario: behavioral features stream from the screenome, but the person has not completed any recent CES-D. person_mean_cesd is still available from historical data. **Caution: Sens-W is artificially inflated (0.892) and should not be interpreted as genuine sensitivity.** When prior_cesd is forced to the population mean (~12), it falls below most people's person_mean_cesd, making the gap (pmcesd − prior_cesd) large and positive for nearly everyone. The model learned during training that this pattern signals "currently below usual level → predict worsening," so it predicts worsening for almost all observations. This catches nearly every true worsening case by chance (high recall) but generates massive false positives — PPV-W of 0.170 means only 17% of predicted worsening cases are real. AUC (0.666) is a more honest summary of performance here.
 
 9. **Cold start** — Full 39-feature model evaluated via repeated leave-group-out CV (5 repeats × 5 folds = 25 evaluations). Each fold holds out ~20% of persons entirely — these persons are never seen during training. person_mean_cesd is set to the population mean for held-out persons. Tests generalization to completely new individuals with no historical CES-D profile.
 
 10. **Full model** — All 39 features with current information. The system has current behavioral data, current CES-D (prior_cesd from the most recent period), and a reliable person_mean_cesd computed from the person's training history. This is the ceiling for known, active participants.
+
+## Statistical Baselines (B0–B4)
+
+Reference performance for zero-information and simple-rule predictors on the same test set (n=411). Full results in `classification/reports/baseline_results.md`.
+
+| Baseline | Rule | AUC | BalAcc | Sens-W | PPV-W |
+|---|---|---|---|---|---|
+| B0 No Change | Predict all stable | 0.500 | 0.333 | 0.000 | 0.000 |
+| B1 Population Mean | Predict majority class (stable) | 0.500 | 0.333 | 0.000 | 0.000 |
+| B2 LVCF | Repeat previous period's class | 0.557 | 0.336 | 0.054 | 0.053 |
+| B3 Person Modal | Person's most common training class | 0.499 | 0.327 | 0.000 | 0.000 |
+| B4 Regression to Mean | Direction toward person's training-mean severity band | 0.750 | 0.674 | 0.541 | 0.408 |
+
+B4 is equivalent to the rule-based **Revert-to-person-mean** scenario in the deployment ladder. It is the strongest zero-model baseline, but it requires the person's training-period mean CES-D — a quantity computed from many historical observations. This makes B4 a well-resourced rule that is **not directly comparable to degraded-information scenarios** such as Onboarding, where that history is unavailable. B0–B3 are the appropriate lower bounds for degraded scenarios; B4 is only a fair comparison for the full model and other scenarios where person history is available.
 
 ## Deployment Ladder (XGBoost)
 
@@ -227,9 +241,14 @@ All model-based scenarios (except Intake form only) use the same 39-feature XGBo
 
 ## Key Insights
 
+**CES-D currency is essential:**
+1. **Onboarding → Full model**: ΔAUC = +0.236. The largest single gain in the ladder comes from having a current, updating CES-D — not from adding behavioral features.
+2. **Stale 4-week degradation** (Full → Stale 4wk): ΔAUC = −0.171. Even a 4-week-old CES-D causes substantial performance loss, reinforcing that the CES-D anchor must be current.
+3. **Onboarding is close to intake form only across models**: best Onboarding is SVM (0.733) vs best Intake is XGBoost (0.720); for XGBoost specifically, Onboarding (0.670) falls below Intake (0.720). Adding 37 behavioral features on top of a frozen first CES-D yields little to no gain over having only age and gender. When the CES-D anchor is stale, behavioral features contribute minimally.
 
-1. **Intake → Onboarding**: ΔAUC = -0.050
-2. **Onboarding → Full model**: ΔAUC = +0.236
-3. **Stale 4wk degradation**: ΔAUC = -0.171
-4. **Cold start vs full**: ΔAUC = -0.085
-5. **No fresh CES-D vs full**: ΔAUC = -0.240
+**Behavioral features do carry signal — but need a good anchor:**
+4. **Cold start vs Onboarding** (AUC 0.821 vs 0.670): a model evaluated on completely unseen persons (with pmcesd = pop_mean) outperforms the same model with Screenome data but a frozen intake CES-D. This confirms that a stale individual anchor is worse than no individual anchor at all.
+5. **Cold start vs Full model**: ΔAUC = −0.085. The gap between never-seen persons and known persons is relatively modest, suggesting behavioral trajectory generalizes reasonably across individuals.
+
+**Interpreting No fresh CES-D:**
+6. **No fresh CES-D Sens-W = 0.892 is not a real result.** The model predicts worsening for nearly every observation when prior_cesd = pop_mean ≈ 12 (below most persons' pmcesd), making it a near-universal worsening alarm. AUC = 0.666 is the honest performance summary. PPV-W = 0.170 confirms the prediction is clinically unusable.
