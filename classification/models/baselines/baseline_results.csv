@@ -1,0 +1,16 @@
+AUC,BalAcc,F1macro,SensW,PPVW,label,baseline,description,B1_majority_class
+0.5,0.333,0.297,0.0,0.0,sev_crossing,B0,No Change (predict all stable),
+0.5,0.333,0.297,0.0,0.0,sev_crossing,B1,Population Mean (majority class from training),stable
+0.557,0.336,0.336,0.054,0.053,sev_crossing,B2,LVCF (last value carried forward),
+0.499,0.327,0.304,0.0,0.0,sev_crossing,B3,Person-Specific Mean (modal training class per person),
+0.75,0.674,0.654,0.541,0.408,sev_crossing,B4,Regression to Mean (direction toward person mean CES-D),
+0.5,0.333,0.292,0.0,0.0,personal_sd,B0,No Change (predict all stable),
+0.5,0.333,0.292,0.0,0.0,personal_sd,B1,Population Mean (majority class from training),stable
+0.529,0.322,0.32,0.049,0.045,personal_sd,B2,LVCF (last value carried forward),
+0.5,0.333,0.292,0.0,0.0,personal_sd,B3,Person-Specific Mean (modal training class per person),
+0.642,0.533,0.526,0.293,0.24,personal_sd,B4,Regression to Mean (direction toward person mean CES-D),
+0.5,0.333,0.167,0.0,0.0,balanced_tercile,B0,No Change (predict all stable),
+0.5,0.333,0.167,1.0,0.333,balanced_tercile,B1,Population Mean (majority class from training),worsening
+0.482,0.309,0.307,0.197,0.201,balanced_tercile,B2,LVCF (last value carried forward),
+0.58,0.44,0.432,0.241,0.363,balanced_tercile,B3,Person-Specific Mean (modal training class per person),
+0.646,0.528,0.53,0.584,0.506,balanced_tercile,B4,Regression to Mean (direction toward person mean CES-D),
