@@ -2,9 +2,9 @@
 
 ## Summary
 
-The best ElasticNet condition is **base_lag_pmcesd** (base features + 17 behavioral lag features + person_mean_cesd), selected by lowest validation MAE (3.92). It achieves **Test MAE = 4.13** CES-D points, beating the best naive baseline (B0: No Change, Test MAE = 4.60) by ~0.47 points. The model retains only 2 of 39 features -- both CES-D history variables -- and zeroes out every behavioral (screenome) feature. It is effectively a regression-to-the-mean predictor: it pushes each person's predicted CES-D change back toward their long-run average.
+The best ElasticNet condition is **base_lag_pmcesd** (base features + 17 behavioral lag features + person_mean_cesd), selected by lowest validation MAE (3.92). It achieves **Test MAE = 4.13**, beating the best naive baseline (B0: No Change, Test MAE = 4.60). The model retains only 2 of 39 features -- both CES-D history variables -- and zeroes out every behavioral (screenome) feature. It is effectively a regression-to-the-mean predictor: it pushes each person's predicted CES-D change back toward their long-run average.
 
-PID-encoded variants (e.g., pheno_pid) achieve slightly better Test MAE (4.06) by learning person-specific intercepts, but at the cost of 120 parameters for 96 persons and a worse validation MAE (3.92). Per protocol, we select by Val MAE.
+An honorable mentioned is **pheno_pid**, which achieves slightly better Test MAE (4.06) by learning person-specific intercepts. However, this is at the cost of 120 parameters for 96 persons and a worse validation MAE (3.92).
 
 ---
 
@@ -40,7 +40,7 @@ PID-encoded variants (e.g., pheno_pid) achieve slightly better Test MAE (4.06) b
 | dev_pid | Base + dev + PID OHE | 125 | 107 |
 | dev_pheno_pid | Base + dev + pheno + PID OHE | 130 | 111 |
 
-**Key observation**: 6 conditions (prior_cesd, base, pheno, dev, dev_pheno, base_lag) collapse to identical or near-identical models -- ElasticNet zeroes out all features except `prior_cesd`. Without person-level information (person_mean_cesd or PID encoding), no behavioral feature survives regularization.
+The key obsevation is that 6 conditions (prior_cesd, base, pheno, dev, dev_pheno, base_lag) collapse to identical or near-identical models -- ElasticNet zeroes out all features except `prior_cesd`. Without person-level information (person_mean_cesd or PID encoding), no behavioral feature survives regularization.
 
 ---
 
@@ -83,9 +83,6 @@ Direction metrics are from posthoc sev_crossing analysis. AUC = OvR macro, BalAc
 | B3: Person-Specific Mean | 4.39 | 4.77 | 6.73 | 7.52 |
 | B4: Regression to Mean | 6.97 | 4.68 | 6.67 | 7.45 |
 
-- **Improvement over B0**: 0.37 Val MAE, 0.47 Test MAE
-- **Improvement over B3**: 0.47 Val MAE, 0.64 Test MAE
-
 ---
 
 ## Model Coefficients & Interpretation
@@ -99,13 +96,13 @@ Hyperparameters: alpha = 10.0, l1_ratio = 0.1 (strongly Ridge-dominant).
 | prior_cesd | -0.502 | -0.458 | Higher current CES-D predicts a *decrease* (regression toward mean) |
 | person_mean_cesd | +0.447 | +0.418 | Higher personal average predicts an *increase* (pull back up) |
 
-**What this model is doing**: The two coefficients nearly cancel. The predicted delta approximates:
+The two coefficients nearly cancel. The predicted delta approximates:
 
 ```
 delta_hat ≈ 0.45 * (person_mean_cesd - prior_cesd)
 ```
 
-This is a **regression-to-the-mean machine**: it predicts that CES-D will move back toward each person's long-run average. No behavioral feature (screen time, app switching, social media use, etc.) contributes. Compared to the previous 44-feature model, dropping the 5 static/clinical lags caused the model to lose `lag_cesd_delta` and `lag_prior_cesd` -- but these were already small coefficients (-0.14 and -0.04) that added negligible predictive value.
+This is a **regression-to-the-mean machine**: it predicts that CES-D will move back toward each person's long-run average. No behavioral feature (screen time, app switching, social media use, etc.) contributes.
 
 ### Contrast: PID-based models
 
@@ -121,16 +118,16 @@ The PID-encoded models (pheno_pid, pid, dev_pid, dev_pheno_pid) take a fundament
 | Behavioral (screenome) | active_day_ratio_delta (+3.0), overnight_ratio (+1.0) | -1.7 to +3.0 | Small behavioral signals |
 | Prior CES-D | prior_cesd (-0.64) | -0.64 | Regression to mean (diminished vs base_lag_pmcesd) |
 
-**What PID models are doing**: By assigning each person a unique intercept (e.g., PID 5343 gets +18.2, meaning their CES-D is predicted to increase by ~18 points before other features adjust), the model captures person-level dynamics that the pooled model cannot. This partly compensates for the absence of explicit person-mean features.
+By assigning each person a unique intercept (for example, PID 5343 gets +18.2, meaning their CES-D is predicted to increase by ~18 points before other features adjust), the model captures person-level dynamics that the pooled model cannot. This partly compensates for the absence of explicit person-mean features.
 
 Behavioral features *do* enter the PID-based models, but with smaller coefficients than the PID intercepts. The largest behavioral effect (active_day_ratio_delta = +3.0) is dwarfed by the person intercepts (+/-10-18).
 
 ### What this means
 
-1. **Screenome features add negligible value in a pooled linear model** -- CES-D history dominates entirely
-2. **Person-level information is the key**: whether encoded explicitly (person_mean_cesd) or via PID dummies, knowing *who* the person is matters far more than *what they did on their phone*
-3. **PID-based models risk overfitting**: 120 parameters for 96 persons is near-saturation; the fact that Test MAE still improves suggests the person effects are real but the model is fragile
-4. **The regression-to-mean mechanism is dominant**: CES-D scores naturally fluctuate toward each person's average, and ElasticNet correctly identifies this as the strongest predictive signal
+1. **Screenome features add negligible value in a pooled linear model**: CES-D history dominates entirely
+2. **Person-level information is the key for ElasticNet**: whether encoded explicitly (person_mean_cesd) or via PID dummies, knowing *who* the person is matters far more than *what they did on their phone*
+3. **PID-based models risk overfitting**: 120 parameters for 96 persons means more free parameters than training subjects, so the model could easily memorize person-specific noise rather than learning generalizable patterns; the fact that Test MAE still improves suggests the person effects are real, but performance would likely degrade substantially on a new sample of persons
+4. **The regression-to-mean mechanism is dominant**: CES-D scores naturally fluctuate toward each person's average, and ElasticNet identifies this as the strongest predictive signal
 
 ---
 
@@ -203,10 +200,10 @@ The model works well for some participants (high-tier MAE ~1 CES-D point) and ve
 
 ## Key Takeaways
 
-1. **Best condition**: `base_lag_pmcesd` (Val MAE 3.92, Test MAE 4.13), selected by validation MAE per protocol
+1. **Best feature set**: `base_lag_pmcesd` (Val MAE 3.92, Test MAE 4.13), selected by validation MAE per protocol
 2. **Beats B0 baseline** by ~0.47 Test MAE points -- a modest but consistent improvement
 3. **All screenome behavioral features zeroed out** by regularization; the model relies entirely on CES-D history (prior_cesd, person_mean_cesd)
-4. **The model is regression-to-the-mean**: it predicts CES-D will move back toward each person's long-run average -- a 2-feature model
-5. **PID-encoded models achieve slightly better Test MAE** (pheno_pid: 4.059 vs 4.127) by learning person-specific intercepts, but at the cost of 120 parameters for 96 persons
+4. **ElasticNet is a regression-to-the-mean machine**: it predicts CES-D will move back toward each person's long-run average -- a 2-feature model
+5. **PID-encoded models can achieve slightly better Test MAE** (pheno_pid: 4.059 vs 4.127) by learning person-specific intercepts, but at the cost of 120 parameters for 96 persons
 6. **Direction prediction dominated by the stable class**; poor sensitivity for worsening (Sens-W = 0.24) and zero for personal_sd
 7. **Large performer variability**: high-tier MAE ~1 vs low-tier MAE ~9, indicating substantial heterogeneity that a pooled linear model cannot capture
