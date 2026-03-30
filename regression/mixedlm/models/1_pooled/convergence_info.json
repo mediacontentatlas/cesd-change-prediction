@@ -1,0 +1,13 @@
+{
+  "attempts": [
+    {
+      "optimizer": "lbfgs",
+      "random_effects": [],
+      "success": true,
+      "error": null
+    }
+  ],
+  "final_config": [],
+  "converged": true,
+  "simplified": false
+}

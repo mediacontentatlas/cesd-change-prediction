@@ -1,0 +1,35 @@
+                    Mixed Linear Model Regression Results
+=============================================================================
+Model:                   MixedLM        Dependent Variable:        y         
+No. Observations:        1196           Method:                    REML      
+No. Groups:              96             Scale:                     34.7507   
+Min. group size:         6              Log-Likelihood:            -3938.0375
+Max. group size:         15             Converged:                 Yes       
+Mean group size:         12.5                                                
+-----------------------------------------------------------------------------
+                                 Coef.  Std.Err.    z    P>|z|  [0.025 0.975]
+-----------------------------------------------------------------------------
+Intercept                        16.640    5.499   3.026 0.002   5.862 27.419
+prior_cesd                       -0.696    0.032 -21.705 0.000  -0.758 -0.633
+active_day_ratio_delta            5.189    4.566   1.136 0.256  -3.760 14.137
+mean_daily_overnight_ratio        1.631    2.830   0.576 0.564  -3.915  7.178
+mean_daily_overnight_ratio_delta  2.752    2.205   1.248 0.212  -1.570  7.074
+mean_daily_social_ratio          -0.859    7.686  -0.112 0.911 -15.925 14.206
+mean_daily_social_ratio_delta    -4.133    7.269  -0.569 0.570 -18.380 10.115
+age                              -1.615    0.773  -2.088 0.037  -3.130 -0.099
+mean_daily_screens                1.106    0.543   2.035 0.042   0.041  2.171
+mean_daily_screens_delta         -0.638    0.246  -2.595 0.009  -1.120 -0.156
+mean_daily_unique_apps           -1.401    0.764  -1.835 0.067  -2.897  0.095
+mean_daily_unique_apps_delta      0.176    0.272   0.644 0.519  -0.358  0.710
+mean_daily_switches               1.398    0.664   2.105 0.035   0.097  2.700
+mean_daily_switches_delta         0.236    0.271   0.872 0.383  -0.294  0.767
+switches_per_screen               0.204    0.275   0.740 0.459  -0.336  0.743
+switches_per_screen_delta        -0.099    0.265  -0.374 0.708  -0.619  0.421
+mean_daily_social_screens         0.260    0.778   0.335 0.738  -1.264  1.785
+mean_daily_social_screens_delta   0.132    0.330   0.399 0.690  -0.516  0.779
+clip_dispersion                   0.041    0.411   0.099 0.921  -0.765  0.847
+clip_dispersion_delta             0.228    0.217   1.054 0.292  -0.196  0.653
+gender_mode_1                    -9.582    5.426  -1.766 0.077 -20.216  1.052
+gender_mode_2                    -7.946    5.352  -1.485 0.138 -18.435  2.543
+Group Var                        50.146    1.663                             
+=============================================================================

@@ -1,0 +1,44 @@
+                                Mixed Linear Model Regression Results
+=====================================================================================================
+Model:                           MixedLM                Dependent Variable:                y         
+No. Observations:                1196                   Method:                            REML      
+No. Groups:                      96                     Scale:                             32.9985   
+Min. group size:                 6                      Log-Likelihood:                    -3920.0461
+Max. group size:                 15                     Converged:                         Yes       
+Mean group size:                 12.5                                                                
+-----------------------------------------------------------------------------------------------------
+                                                         Coef.  Std.Err.    z    P>|z|  [0.025 0.975]
+-----------------------------------------------------------------------------------------------------
+Intercept                                                17.930    7.019   2.555 0.011   4.173 31.686
+prior_cesd                                               -0.724    0.049 -14.818 0.000  -0.820 -0.628
+active_day_ratio_delta                                    4.181    4.483   0.933 0.351  -4.605 12.967
+mean_daily_overnight_ratio                                0.863    2.790   0.309 0.757  -4.606  6.332
+mean_daily_overnight_ratio_delta                          3.594    2.186   1.644 0.100  -0.690  7.878
+mean_daily_social_ratio                                   3.138    8.108   0.387 0.699 -12.753 19.030
+mean_daily_social_ratio_delta                            -6.225    7.386  -0.843 0.399 -20.700  8.251
+age                                                      -1.494    0.742  -2.013 0.044  -2.949 -0.039
+mean_daily_screens                                        1.077    0.533   2.023 0.043   0.034  2.121
+mean_daily_screens_delta                                 -0.630    0.241  -2.612 0.009  -1.103 -0.157
+mean_daily_unique_apps                                   -1.824    0.798  -2.285 0.022  -3.389 -0.259
+mean_daily_unique_apps_delta                              0.202    0.269   0.749 0.454  -0.326  0.729
+mean_daily_switches                                       1.858    0.707   2.630 0.009   0.474  3.243
+mean_daily_switches_delta                                 0.187    0.272   0.687 0.492  -0.346  0.719
+switches_per_screen                                       0.205    0.268   0.766 0.444  -0.320  0.731
+switches_per_screen_delta                                -0.128    0.260  -0.492 0.623  -0.638  0.382
+mean_daily_social_screens                                 0.091    0.782   0.116 0.908  -1.442  1.623
+mean_daily_social_screens_delta                           0.179    0.335   0.534 0.594  -0.477  0.834
+clip_dispersion                                           0.130    0.414   0.315 0.752  -0.680  0.941
+clip_dispersion_delta                                     0.227    0.212   1.069 0.285  -0.189  0.643
+gender_mode_1                                           -11.004    6.953  -1.583 0.113 -24.631  2.623
+gender_mode_2                                            -9.893    6.981  -1.417 0.156 -23.576  3.790
+Group Var                                                37.193    2.071                             
+Group x prior_cesd Cov                                   -0.026    0.057                             
+prior_cesd Var                                            0.039    0.002                             
+Group x mean_daily_social_screens Cov                    -0.329    0.954                             
+prior_cesd x mean_daily_social_screens Cov               -0.082    0.036                             
+mean_daily_social_screens Var                             0.176    0.388                             
+Group x mean_daily_social_ratio Cov                      -1.446    8.041                             
+prior_cesd x mean_daily_social_ratio Cov                 -0.078    0.186                             
+mean_daily_social_screens x mean_daily_social_ratio Cov   0.183    5.487                             
+mean_daily_social_ratio Var                              38.437   28.897                             
+=====================================================================================================

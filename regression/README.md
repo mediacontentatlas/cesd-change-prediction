@@ -105,10 +105,10 @@ Your regression experiments should include **at minimum** the same four feature 
 
 | Condition | Features | N features |
 |---|---|---|
-| prior_cesd only | `prior_cesd` | 1 |
-| base | All 21 base features | 21 |
-| base + behavioral lag | Base + 17 lagged behavioral features | 38 |
-| base + behavioral lag + pmcesd | Base + lag + `person_mean_cesd` | 39 |
+| `prior_cesd` | `prior_cesd` | 1 |
+| `base` | All 21 base features | 21 |
+| `base_dev` | Base + 8 within-person deviation features (`X_dev_*.npy`) | 29 |
+| `base_dev_pmcesd` | Base + dev + `person_mean_cesd` | 30 |
 
 You may add additional ablation conditions specific to your model, but always include these four.
 
@@ -134,10 +134,33 @@ regression/
 1. Place scripts in `<model>/scripts/`, trained models and predictions in `<model>/models/`, results in `<model>/reports/`
 2. Save test predictions as `y_pred_test.npy` so posthoc scripts can use them
 3. Report all regression metrics (MAE, RMSE, within-person R², between-person R²) on train/val/test
-4. Run all four feature ablation conditions (prior_cesd only, base, base+lag, base+lag+pmcesd) — add your own on top
+4. Run all four feature ablation conditions (prior_cesd, base, base_dev, base_dev_pmcesd) — add your own on top
 5. Run posthoc direction analysis using classification labels (at minimum `sev_crossing`), reporting both stratified regression error AND classification metrics (BalAcc, AUC, Sens-W, PPV-W, confusion matrix)
 6. When you have final results, add summary tables/figures to the top-level `../reports/` folder
 
 ## Results
 
-*(To be filled when regression results are available.)*
+### MixedLM — Feature Ablation (Test Set)
+
+| Condition | N features | MAE | RMSE | R² | Within-R² (median) |
+|---|---|---|---|---|---|
+| `prior_cesd` | 1 | 4.17 | 6.17 | 0.303 | 0.180 |
+| `base` | 21 | 4.24 | 6.23 | 0.290 | 0.211 |
+| `base_dev` | 29 | 4.30 | 6.32 | 0.270 | 0.211 |
+| `base_dev_pmcesd` | 30 | 3.80 | 5.85 | 0.376 | 0.389 |
+
+### MixedLM — Random Effects Sweep (Test Set, 21 base features)
+
+| # | Model | Random Effects | MAE | RMSE | R² |
+|---|---|---|---|---|---|
+| 1 | Pooled (no PID) | None | 4.707 | 6.920 | 0.125 |
+| 2 | Intercept only | Intercept | 4.240 | 6.235 | 0.290 |
+| 3 | + prior_cesd slope | + prior_cesd | 4.235 | 6.255 | 0.285 |
+| 4 | + prior + switches | + prior_cesd + switches | 4.242 | 6.190 | 0.300 |
+| 5 | + prior + social | + prior_cesd + social_ratio | 4.237 | 6.366 | 0.260 |
+| 6 | + prior + social ext | + prior_cesd + social_scr + ratio | 4.236 | 6.270 | 0.282 |
+| 7 | switches + screens | + switches + screens | 4.301 | 6.195 | 0.299 |
+| 8 | **prior + sw + scr** | + prior_cesd + switches + screens | **4.236** | **6.157** | **0.307** |
+| 9 | + dev features | + prior_cesd (29 features) | 4.314 | 6.362 | 0.261 |
+
+All 9 models match the screenome_mh_pred repo results exactly. Best random-effects model: #8 (lowest RMSE, highest R²). Best overall: `base_dev_pmcesd` ablation (MAE=3.80, R²=0.376). See `mixedlm/README.md` for full details.

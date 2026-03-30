@@ -1,0 +1,19 @@
+{
+  "attempts": [
+    {
+      "optimizer": "lbfgs",
+      "random_effects": [
+        "mean_daily_switches",
+        "mean_daily_screens"
+      ],
+      "success": true,
+      "error": null
+    }
+  ],
+  "final_config": [
+    "mean_daily_switches",
+    "mean_daily_screens"
+  ],
+  "converged": true,
+  "simplified": false
+}

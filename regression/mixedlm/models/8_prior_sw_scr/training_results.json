@@ -1,0 +1,45 @@
+{
+  "converged": true,
+  "aic": 7890.8529726446195,
+  "bic": 8084.149014156022,
+  "llf": -3907.4264863223098,
+  "nobs": 1196,
+  "scale": 31.278774503479617,
+  "random_effects_config": [
+    "prior_cesd",
+    "mean_daily_switches",
+    "mean_daily_screens"
+  ],
+  "cov_random_effects": "                         Group  ...  mean_daily_screens\nGroup                34.140189  ...            0.421873\nprior_cesd           -0.044326  ...            0.106234\nmean_daily_switches  -6.983503  ...           -8.253942\nmean_daily_screens    0.421873  ...            9.291045\n\n[4 rows x 4 columns]",
+  "condition": "base",
+  "label": "8_prior_sw_scr",
+  "n_features": 21,
+  "feature_names": [
+    "prior_cesd",
+    "active_day_ratio_delta",
+    "mean_daily_overnight_ratio",
+    "mean_daily_overnight_ratio_delta",
+    "mean_daily_social_ratio",
+    "mean_daily_social_ratio_delta",
+    "age",
+    "mean_daily_screens",
+    "mean_daily_screens_delta",
+    "mean_daily_unique_apps",
+    "mean_daily_unique_apps_delta",
+    "mean_daily_switches",
+    "mean_daily_switches_delta",
+    "switches_per_screen",
+    "switches_per_screen_delta",
+    "mean_daily_social_screens",
+    "mean_daily_social_screens_delta",
+    "clip_dispersion",
+    "clip_dispersion_delta",
+    "gender_mode_1",
+    "gender_mode_2"
+  ],
+  "random_effects": [
+    "prior_cesd",
+    "mean_daily_switches",
+    "mean_daily_screens"
+  ]
+}
