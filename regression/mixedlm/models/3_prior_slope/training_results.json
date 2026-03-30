@@ -1,0 +1,41 @@
+{
+  "converged": true,
+  "aic": 7894.672275551942,
+  "bic": 8026.927461849217,
+  "llf": -3921.336137775971,
+  "nobs": 1196,
+  "scale": 33.301643361294644,
+  "random_effects_config": [
+    "prior_cesd"
+  ],
+  "cov_random_effects": "                Group  prior_cesd\nGroup       35.150113   -0.037359\nprior_cesd  -0.037359    0.039247",
+  "condition": "base",
+  "label": "3_prior_slope",
+  "n_features": 21,
+  "feature_names": [
+    "prior_cesd",
+    "active_day_ratio_delta",
+    "mean_daily_overnight_ratio",
+    "mean_daily_overnight_ratio_delta",
+    "mean_daily_social_ratio",
+    "mean_daily_social_ratio_delta",
+    "age",
+    "mean_daily_screens",
+    "mean_daily_screens_delta",
+    "mean_daily_unique_apps",
+    "mean_daily_unique_apps_delta",
+    "mean_daily_switches",
+    "mean_daily_switches_delta",
+    "switches_per_screen",
+    "switches_per_screen_delta",
+    "mean_daily_social_screens",
+    "mean_daily_social_screens_delta",
+    "clip_dispersion",
+    "clip_dispersion_delta",
+    "gender_mode_1",
+    "gender_mode_2"
+  ],
+  "random_effects": [
+    "prior_cesd"
+  ]
+}

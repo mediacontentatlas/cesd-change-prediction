@@ -1,0 +1,17 @@
+{
+  "converged": true,
+  "aic": 7943.254957972893,
+  "bic": 7958.515171776425,
+  "llf": -3968.6274789864465,
+  "nobs": 1196,
+  "scale": 35.2867747693282,
+  "random_effects_config": [],
+  "cov_random_effects": "           Group\nGroup  49.954857",
+  "condition": "prior_cesd",
+  "label": "prior_cesd",
+  "n_features": 1,
+  "feature_names": [
+    "prior_cesd"
+  ],
+  "random_effects": []
+}

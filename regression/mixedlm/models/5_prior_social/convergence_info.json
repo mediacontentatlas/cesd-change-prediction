@@ -1,0 +1,19 @@
+{
+  "attempts": [
+    {
+      "optimizer": "lbfgs",
+      "random_effects": [
+        "prior_cesd",
+        "mean_daily_social_ratio"
+      ],
+      "success": true,
+      "error": null
+    }
+  ],
+  "final_config": [
+    "prior_cesd",
+    "mean_daily_social_ratio"
+  ],
+  "converged": true,
+  "simplified": false
+}

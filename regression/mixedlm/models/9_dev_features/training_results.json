@@ -1,0 +1,49 @@
+{
+  "converged": true,
+  "aic": 7879.9069014142715,
+  "bic": 8052.855991187631,
+  "llf": -3905.9534507071357,
+  "nobs": 1196,
+  "scale": 33.2272918118917,
+  "random_effects_config": [
+    "prior_cesd"
+  ],
+  "cov_random_effects": "                Group  prior_cesd\nGroup       39.014528   -0.083306\nprior_cesd  -0.083306    0.039745",
+  "condition": "base_dev",
+  "label": "9_dev_features",
+  "n_features": 29,
+  "feature_names": [
+    "prior_cesd",
+    "active_day_ratio_delta",
+    "mean_daily_overnight_ratio",
+    "mean_daily_overnight_ratio_delta",
+    "mean_daily_social_ratio",
+    "mean_daily_social_ratio_delta",
+    "age",
+    "mean_daily_screens",
+    "mean_daily_screens_delta",
+    "mean_daily_unique_apps",
+    "mean_daily_unique_apps_delta",
+    "mean_daily_switches",
+    "mean_daily_switches_delta",
+    "switches_per_screen",
+    "switches_per_screen_delta",
+    "mean_daily_social_screens",
+    "mean_daily_social_screens_delta",
+    "clip_dispersion",
+    "clip_dispersion_delta",
+    "gender_mode_1",
+    "gender_mode_2",
+    "dev_0",
+    "dev_1",
+    "dev_2",
+    "dev_3",
+    "dev_4",
+    "dev_5",
+    "dev_6",
+    "dev_7"
+  ],
+  "random_effects": [
+    "prior_cesd"
+  ]
+}
