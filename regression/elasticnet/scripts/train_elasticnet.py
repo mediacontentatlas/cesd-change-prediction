@@ -51,6 +51,12 @@ from sklearn.linear_model import ElasticNet
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.preprocessing import OneHotEncoder
 
+from metrics import (
+    compute_aggregate_metrics,
+    compute_baselines, compute_train_baselines,
+    build_comparison_table,
+)
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
@@ -196,47 +202,6 @@ def build_feature_matrix(
         names_out = pid_names + names_out
 
     return X_out, names_out, enc
-
-
-def compute_within_person_r2(
-    y_true: np.ndarray, y_pred: np.ndarray, pids: np.ndarray,
-) -> float:
-    """Variance explained WITHIN individuals.
-
-    For each person: compute SS_res and SS_tot (centered on person mean).
-    Pool across persons: 1 - sum(SS_res_i) / sum(SS_tot_i).
-    """
-    ss_res_total, ss_tot_total = 0.0, 0.0
-    for pid in np.unique(pids):
-        mask = pids == pid
-        yt = y_true[mask]
-        yp = y_pred[mask]
-        person_mean = yt.mean()
-        ss_res_total += np.sum((yt - yp) ** 2)
-        ss_tot_total += np.sum((yt - person_mean) ** 2)
-    if ss_tot_total == 0:
-        return 0.0
-    return 1.0 - ss_res_total / ss_tot_total
-
-
-def compute_between_person_r2(
-    y_true: np.ndarray, y_pred: np.ndarray, pids: np.ndarray,
-) -> float:
-    """Variance explained BETWEEN individuals (person-mean level)."""
-    person_means_true = []
-    person_means_pred = []
-    for pid in np.unique(pids):
-        mask = pids == pid
-        person_means_true.append(y_true[mask].mean())
-        person_means_pred.append(y_pred[mask].mean())
-    pm_true = np.array(person_means_true)
-    pm_pred = np.array(person_means_pred)
-    grand_mean = pm_true.mean()
-    ss_res = np.sum((pm_true - pm_pred) ** 2)
-    ss_tot = np.sum((pm_true - grand_mean) ** 2)
-    if ss_tot == 0:
-        return 0.0
-    return 1.0 - ss_res / ss_tot
 
 
 def plot_validation_curves(
@@ -600,15 +565,17 @@ if __name__ == "__main__":
     # ======================================================================
     print("\n[Step 8] Computing metrics...")
 
-    train_mae = float(mean_absolute_error(y_train, y_pred_train))
-    train_rmse = float(np.sqrt(mean_squared_error(y_train, y_pred_train)))
-    train_wp_r2 = float(compute_within_person_r2(y_train, y_pred_train, pid_train))
-    train_bp_r2 = float(compute_between_person_r2(y_train, y_pred_train, pid_train))
+    train_metrics = compute_aggregate_metrics(y_train, y_pred_train, pid_train)
+    train_mae = train_metrics.mae
+    train_rmse = train_metrics.rmse
+    train_wp_r2 = train_metrics.within_person_r2_median
+    train_bp_r2 = train_metrics.between_person_r2
 
-    val_mae = float(mean_absolute_error(y_val, y_pred_val))
-    val_rmse = float(np.sqrt(mean_squared_error(y_val, y_pred_val)))
-    val_wp_r2 = float(compute_within_person_r2(y_val, y_pred_val, pid_val))
-    val_bp_r2 = float(compute_between_person_r2(y_val, y_pred_val, pid_val))
+    val_metrics = compute_aggregate_metrics(y_val, y_pred_val, pid_val)
+    val_mae = val_metrics.mae
+    val_rmse = val_metrics.rmse
+    val_wp_r2 = val_metrics.within_person_r2_median
+    val_bp_r2 = val_metrics.between_person_r2
 
     header = f"  {'Split':10s}  {'MAE':>8s}  {'RMSE':>8s}  {'W-R²':>8s}  {'B-R²':>8s}  {'Note':>15s}"
     sep = f"  {'-' * 10}  {'-' * 8}  {'-' * 8}  {'-' * 8}  {'-' * 8}  {'-' * 15}"
@@ -666,6 +633,25 @@ if __name__ == "__main__":
         print(f"  Saved PID encoder to {output_dir / 'pid_encoder.joblib'}")
 
     # ======================================================================
+    # Step 9b: Baseline comparison tables (train + val)
+    # ======================================================================
+    print("\n[Step 9b] Computing baseline comparisons...")
+    train_bl = compute_train_baselines(y_train, pid_train)
+    val_bl = compute_baselines(y_train, y_val, pid_train, pid_val)
+
+    for split_name, y_split, pred_split, pid_split, bl_split in [
+        ("train", y_train, y_pred_train, pid_train, train_bl),
+        ("val", y_val, y_pred_val, pid_val, val_bl),
+    ]:
+        comp_df = build_comparison_table(
+            y_split, pred_split, pid_split, bl_split,
+            model_name=f"ElasticNet ({condition})",
+        )
+        comp_df.to_csv(output_dir / f"{split_name}_aggregate_comparison.csv",
+                       index=False)
+        print(f"  Saved {split_name}_aggregate_comparison.csv")
+
+    # ======================================================================
     # Step 10: Final test evaluation (Train+Val refit)  -- only with --run-test
     # ======================================================================
     if args.run_test:
@@ -693,10 +679,11 @@ if __name__ == "__main__":
         joblib.dump(final_test_model, output_dir / "final_model.joblib")
 
         # 10e. Test metrics
-        test_mae = float(mean_absolute_error(y_test, y_pred_test))
-        test_rmse = float(np.sqrt(mean_squared_error(y_test, y_pred_test)))
-        test_wp_r2 = float(compute_within_person_r2(y_test, y_pred_test, pid_test))
-        test_bp_r2 = float(compute_between_person_r2(y_test, y_pred_test, pid_test))
+        test_metrics = compute_aggregate_metrics(y_test, y_pred_test, pid_test)
+        test_mae = test_metrics.mae
+        test_rmse = test_metrics.rmse
+        test_wp_r2 = test_metrics.within_person_r2_median
+        test_bp_r2 = test_metrics.between_person_r2
 
         final_params = {
             "alpha": best_alpha,
@@ -749,6 +736,15 @@ if __name__ == "__main__":
         print(f"  Saved final model to {output_dir / 'final_model.joblib'}")
         print(f"  Saved test predictions to {output_dir / 'y_pred_test.npy'}")
         print(f"  Saved final coefficients to {output_dir / 'final_feature_coefficients.csv'}")
+
+        # 10h. Test baseline comparison
+        test_bl = compute_baselines(y_train, y_test, pid_train, pid_test)
+        comp_df = build_comparison_table(
+            y_test, y_pred_test, pid_test, test_bl,
+            model_name=f"ElasticNet ({condition})",
+        )
+        comp_df.to_csv(output_dir / "test_aggregate_comparison.csv", index=False)
+        print(f"  Saved test_aggregate_comparison.csv")
 
     # ======================================================================
     # Summary

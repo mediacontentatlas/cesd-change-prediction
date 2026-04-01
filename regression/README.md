@@ -164,3 +164,14 @@ regression/
 | 9 | + dev features | + prior_cesd (29 features) | 4.314 | 6.362 | 0.261 |
 
 All 9 models match the screenome_mh_pred repo results exactly. Best random-effects model: #8 (lowest RMSE, highest R²). Best overall: `base_dev_pmcesd` ablation (MAE=3.80, R²=0.376). See `mixedlm/README.md` for full details.
+
+### ElasticNet — Feature Ablation (Test Set)
+
+| Condition | N features | Retained | MAE | RMSE | R² | W-R² (med) |
+|---|---|---|---|---|---|---|
+| `prior_cesd` | 1 | 1 | 4.58 | 7.39 | -0.006 | -0.042 |
+| `base` | 21 | 1 | 4.58 | 7.39 | -0.006 | -0.042 |
+| `base_lag` | 38 | 1 | 4.58 | 7.39 | -0.006 | -0.042 |
+| `base_lag_pmcesd` | 39 | 2 | **4.13** | **6.28** | **0.279** | **0.186** |
+
+Six conditions (prior_cesd, base, base_lag, dev, pheno, dev_pheno) collapse to an identical prior_cesd-only model. Best overall: `base_lag_pmcesd` (MAE=4.13, R²=0.279). See `elasticnet/reports/regression_results.md` for full details.

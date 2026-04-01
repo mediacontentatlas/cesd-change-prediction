@@ -91,7 +91,7 @@ python scripts/posthoc_direction.py --condition base --label-type balanced_terci
 |---|---|
 | MAE | Mean absolute error (CES-D points) |
 | RMSE | Root mean squared error |
-| Within-person R2 | Variance explained within individuals (primary R2) |
+| Within-person R2 (median) | Median of per-person R2 values (primary R2). Uses median because persons with few observations can produce extreme negative R2 that distorts the mean. Matches MixedLM computation. |
 | Between-person R2 | Variance explained between individuals |
 
 Posthoc direction metrics: BalAcc, AUC (OvR macro), Sens-W, PPV-W, confusion matrix.
@@ -114,6 +114,7 @@ models/{condition}/
   performer_tiers_{split}.csv
   performer_tier_stats_{split}.csv
   performer_analysis_{split}.csv
+  {train,val,test}_aggregate_comparison.csv  # Model vs 5 baselines (MAE, RMSE, R², W-R², B-R², per-person MAE quartiles)
 
 models/comparison_summary.csv     # Cross-condition ranking
 
@@ -125,6 +126,30 @@ models/comparison_summary.csv     # Cross-condition ranking
   plots/per_person/               # Per-person CMs + trajectories
 
 reports/                          # Slide-ready figures and tables
+```
+
+## Post-Hoc Direction Analysis: Label Types
+
+Three label types are evaluated in the posthoc direction analysis:
+
+- **`sev_crossing` (primary):** Clinical severity boundary crossing based on CES-D thresholds at 16 and 24. This is the primary label type because it tests clinically meaningful boundary crossings.
+- **`personal_sd` (sensitivity analysis):** Person-specific SD-based thresholds (k = 1.0). Tests whether the regression captures within-person dynamics relative to each person's typical variability.
+- **`balanced_tercile` (supplementary, reported but not emphasized):** Rank-based equal thirds. Included for completeness but not emphasized in the main results because predicting these labels only requires correct rank ordering of predictions, not accurate magnitude estimates -- a weaker test than what continuous regression metrics (MAE, within-person R²) already measure directly. It also artificially inflates direction accuracy without clinical meaning.
+
+All three are run by the orchestrator and saved to `regression/posthoc/elasticnet/<condition>/<label_type>/`. The main results report (`reports/elasticnet_results.md`) includes `balanced_tercile` tables in Section 10 for completeness.
+
+## Dependencies
+
+Standard scientific Python stack:
+
+```
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+pyyaml
+joblib
 ```
 
 ## Configuration

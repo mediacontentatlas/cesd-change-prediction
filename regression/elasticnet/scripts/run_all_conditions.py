@@ -326,8 +326,8 @@ def build_summary(models_dir, data_dir):
             row["within_r2_test"] = sm.get("within_r2")
             row["between_r2_test"] = sm.get("between_r2")
 
-        # ---- Posthoc classification metrics (both label types) ----
-        for label_type in ["sev_crossing", "personal_sd"]:
+        # ---- Posthoc classification metrics (all label types) ----
+        for label_type in ["sev_crossing", "personal_sd", "balanced_tercile"]:
             cls_path = (_POSTHOC_DIR / "elasticnet" / cond_name / label_type
                         / "classification_metrics.csv")
             if cls_path.exists():
@@ -456,8 +456,8 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--label-types", nargs="+",
-        default=["sev_crossing", "personal_sd"],
-        help="Label types for posthoc direction analysis (default: sev_crossing personal_sd)",
+        default=["sev_crossing", "personal_sd", "balanced_tercile"],
+        help="Label types for posthoc direction analysis (default: sev_crossing personal_sd balanced_tercile)",
     )
     args = parser.parse_args()
 
