@@ -8,7 +8,7 @@ We have N = 96 participants contributing 2,002 total observations. The data are 
 
 CES-D delta has near-zero between-person ICC (ICC ~ 0; person means explain only 0.4% of delta variance), meaning no person consistently changes more than another. The prediction target is inherently within-person.
 
-**Relationship to classification task:** The classification task predicts the *direction* of change (improving / stable / worsening). This regression task predicts the continuous change in CES-D score, that is, how much a person's depression score changes from one biweekly assessment to the next, not just which direction. The regression predictions can be post-hoc converted to direction predictions for direct comparison with classifiers (see Section 10).
+In relation to the classification task, the classification task predicts the *direction* of change (improving / stable / worsening). This regression task predicts the continuous change in CES-D score, that is, how much a person's depression score changes from one biweekly assessment to the next, not just which direction. The regression predictions can be post-hoc converted to direction predictions for direct comparison with classifiers (see Section 10).
 
 ---
 
@@ -35,7 +35,7 @@ The selection criterion is minimum validation MAE because MAE is directly interp
 
 ### 2.2 Why ElasticNet
 
-ElasticNet serves as a **global pooled model (M1)** -- a single model trained across all participants, assuming universal behavior-symptom relationships. All coefficients are shared across individuals. This represents the standard population-level approach when individual data is limited or when assuming behavior-symptom relationships are universal. It establishes a strong baseline for assessing the value of personalization.
+ElasticNet serves as a global pooled model -- a single model trained across all participants, assuming universal behavior-symptom relationships. All coefficients are shared across individuals. This represents the standard population-level approach when individual data is limited or when assuming behavior-symptom relationships are universal. It establishes a strong baseline for assessing the value of personalization.
 
 ElasticNet regularization (mixing L1 and L2 penalties) is well-suited to our feature space for two reasons:
 - **L1 penalty (Lasso)** performs automatic feature selection, zeroing out irrelevant predictors -- important given our high-dimensional feature space (up to 130 features across conditions)
@@ -188,7 +188,7 @@ The first three conditions collapse to an identical prior_cesd-only model. Elast
 | collapsed | 4.29 | 4.58 | +0.29 | -0.018 | -0.042 | -0.024 |
 | `base_lag_pmcesd` | 3.92 | 4.13 | +0.21 | 0.239 | 0.186 | -0.053 |
 
-MAE increases modestly from val to test (~0.2-0.3 CES-D points), consistent with mild temporal drift. The `base_lag_pmcesd` model generalizes slightly better in MAE terms (Delta = +0.21 vs +0.29) but shows some W-R² degradation (-0.053). This degradation may reflect that the relationship between a person's chronic CES-D level and their predicted change is slightly less stable in later survey periods -- for instance, if some participants' depression trajectories shift over time (improving or worsening trends), the training-set-derived `person_mean_cesd` becomes a less accurate anchor for their current dynamics.
+MAE increases modestly from val to test (~0.2-0.3 CES-D points), consistent with mild temporal drift. The `base_lag_pmcesd` model generalizes slightly better in MAE terms (Delta = +0.21 vs +0.29) but shows some W-R² degradation (-0.053). This degradation may reflect that the relationship between a person's chronic CES-D level and their predicted change is slightly less stable in later survey periods. For example, if some participants' depression trajectories shift over time (improving or worsening trends), the training-set-derived `person_mean_cesd` becomes a less accurate anchor for their current dynamics.
 
 ---
 
@@ -214,15 +214,15 @@ Direction metrics are from posthoc sev_crossing analysis. AUC = OvR macro, BalAc
 
 **Key findings across all 11 feature-set conditions:**
 
-1. **Six of 11 feature-set conditions collapse to an identical prior_cesd-only model.** ElasticNet zeros out all behavioral features, all lag features, all deviation features, and all phenotype features. Without person-level information, no behavioral feature survives regularization. This is visible in the table above: prior_cesd, base, base_lag, dev, pheno, and dev_pheno all produce identical metrics.
+1. Six of 11 feature-set conditions collapse to an identical prior_cesd-only model. ElasticNet zeros out all behavioral features, all lag features, all deviation features, and all phenotype features. Without person-level information, no behavioral feature survives regularization. This is visible in the table above: prior_cesd, base, base_lag, dev, pheno, and dev_pheno all produce identical metrics.
 
-2. **`person_mean_cesd` is the single most impactful feature addition.** Comparing the collapsed prior_cesd-only model to `base_lag_pmcesd` in Section 6.1: MAE drops from 4.58 to 4.13 (-0.45 CES-D points, -10%), R² jumps from -0.006 to 0.279 (+0.285), and W-R² goes from -0.042 to 0.186 (+0.228). No other feature addition produces a comparable improvement.
+2. `person_mean_cesd` is the single most impactful feature addition in ElasticNet. Comparing the collapsed prior_cesd-only model to `base_lag_pmcesd` in Section 6.1: MAE drops from 4.58 to 4.13 (-0.45 CES-D points, -10%), R² jumps from -0.006 to 0.279 (+0.285), and W-R² goes from -0.042 to 0.186 (+0.228). No other feature addition produces a comparable improvement.
 
-3. **The top 5 feature-set conditions all include PID one-hot encoding or person_mean_cesd** -- person-level information is critical for any improvement over the autoregressive baseline.
+3. Person-level information is critical for improving prediction, as the top 5 feature-set conditions all include PID one-hot encoding or person_mean_cesd
 
-4. **`base_lag_pmcesd` wins on Val MAE despite using far fewer parameters** (2 retained features vs. 100+ for PID-based conditions). `pheno_pid` achieves the best Test MAE (4.06) and Test W-R² (0.219) by learning person-specific intercepts, but at the cost of 120 parameters for 96 persons.
+4. `base_lag_pmcesd` wins on Val MAE despite using far fewer parameters (2 retained features vs. 100+ for PID-based conditions). `pheno_pid` achieves the best Test MAE (4.06) and Test W-R² (0.219) by learning person-specific intercepts, but at the cost of 120 parameters for 96 persons.
 
-5. **Val-to-test generalization is stable** across conditions. For the best model (`base_lag_pmcesd`), Delta MAE = +0.21 from val to test (see Section 6.4), indicating no severe overfitting despite the Train+Val refit in Phase 3.
+5. Val-to-test generalization is stable across conditions. For the best model (`base_lag_pmcesd`), Delta MAE = +0.21 from val to test (see Section 6.4), indicating no severe overfitting despite the Train+Val refit in Phase 3.
 
 ---
 
@@ -241,12 +241,12 @@ Direction metrics are from posthoc sev_crossing analysis. AUC = OvR macro, BalAc
 
 ### 8.2 Improvement over baselines
 
-| Comparison | Delta MAE | Delta MAE (%) | Delta W-R² |
+| Comparison | Delta MAE | Delta W-R² |
 |---|---|---|---|
-| vs. B0 (No Change) | -0.47 | -10.2% | +0.230 |
-| vs. B1 (Population Mean) | -0.49 | -10.6% | +0.235 |
-| vs. B3 (Person-Specific Mean) | -0.64 | -13.4% | +0.266 |
-| vs. B4 (Regression to Mean) | -0.55 | -11.8% | +0.260 |
+| vs. B0 (No Change) | -0.47 | +0.230 |
+| vs. B1 (Population Mean) | -0.49 | +0.235 |
+| vs. B3 (Person-Specific Mean) | -0.64 | +0.266 |
+| vs. B4 (Regression to Mean) | -0.55 | +0.260 |
 
 All baselines have negative R² and negative W-R² on the test set (they explain less variance than a horizontal line at the mean). The ElasticNet substantially outperforms all baselines, with the largest improvement over the person-specific mean baseline (-0.64 MAE, +0.266 W-R²).
 
@@ -291,16 +291,16 @@ Behavioral features *do* enter the PID-based models, but with smaller coefficien
 
 ### 9.3 Summary
 
-1. **Screenome features add negligible value in a pooled linear model**: CES-D history dominates entirely
-2. **Person-level information is the key**: whether encoded explicitly (person_mean_cesd) or via PID dummies, knowing *who* the person is matters far more than *what they did on their phone*
-3. **PID-based models risk overfitting**: 120 parameters for 96 persons means more free parameters than training subjects; Test MAE still improves suggesting person effects are real, but performance would likely degrade on a new sample of persons
-4. **The regression-to-mean mechanism is dominant**: CES-D scores naturally fluctuate toward each person's average, and ElasticNet identifies this as the strongest predictive signal
+1. Screenome features add negligible value in a pooled linear model and prior CES-D history dominates entirely
+2. Person-level information is the key: whether encoded explicitly (person_mean_cesd) or via PID dummies, knowing *who* the person is matters far more than *what they did on their phone*
+3. PID-based models risk overfitting. 120 parameters for 96 persons means more free parameters than training subjects; Test MAE still improves suggesting person effects are real, but performance would likely degrade on a new sample of persons
+4. ElasticNet is a regression-to-mean machine, as CES-D scores naturally fluctuate toward each person's average, and ElasticNet identifies this as the strongest predictive signal
 
 ---
 
 ## 10. Post-Hoc Direction Analysis
 
-The regression model predicts a continuous CES-D delta, but clinically we often care about the *direction* of change: is a person improving, stable, or worsening? This post-hoc analysis converts the continuous regression predictions into three-class direction labels by applying the same labeling function used to generate the ground-truth classification labels (e.g., for `sev_crossing`, a predicted delta that would cross upward past a clinical severity threshold is labeled "worsening"). This lets us directly compare the regression model's ability to recover direction against the dedicated classifiers trained explicitly on those labels -- answering whether a single regression model can serve double duty, or whether separate classification models are needed for clinical alerting.
+The regression model predicts a continuous CES-D delta, but clinically we often care about the *direction* of change: is a person improving, stable, or worsening? This post-hoc analysis converts the continuous regression predictions into three-class direction labels by applying the same labeling function used to generate the ground-truth classification labels (e.g., for `sev_crossing`, a predicted delta that would cross upward past a clinical severity threshold is labeled "worsening"). This lets us directly compare the regression model's ability to recover direction against the dedicated classifiers trained explicitly on those labels.
 
 ### 10.1 Direction classification metrics -- `base_lag_pmcesd`
 
@@ -444,9 +444,9 @@ For data details, software versions, output file index, and pipeline documentati
 
 ## 15. Key Narrative Points
 
-1. **ElasticNet achieves modest but consistent improvement over baselines** (MAE = 4.13, -10% vs B0) when equipped with the person-level trait anchor
-2. **`person_mean_cesd` is the dominant additive feature** -- consistent across ElasticNet (+0.228 W-R²), MixedLM (+0.178 W-R²), and classification (+0.031 AUC)
-3. **Behavioral features alone add no incremental value** -- paralleling the classification finding. The signal is in symptom history, not behavioral phenotype
-4. **Person-specific regression-to-the-mean is the primary mechanism** -- the model predicts each person will revert toward their chronic CES-D level, with the magnitude of predicted change proportional to their current displacement from baseline
-5. **MixedLM outperforms ElasticNet** (MAE 3.80 vs 4.13, W-R² 0.389 vs 0.186) -- the random intercept captures person-level structure more flexibly
-6. **For clinical alerting, classification substantially outperforms regression-as-classifier** -- dedicated classifiers trained on clinical boundaries are the appropriate tool for worsening detection
+1. ElasticNet achieves modest but consistent improvement over baselines (MAE = 4.13, -10% vs B0) when equipped with the person-level trait anchor
+2. `person_mean_cesd` is the dominant additive feature, consistent across ElasticNet (+0.228 W-R²), MixedLM (+0.178 W-R²), and classification (+0.031 AUC)
+3. Behavioral features alone add no incremental value, paralleling the classification finding. The signal is in symptom history, not behavioral phenotype
+4. For ElasticNet, person-specific regression-to-the-mean is the primary mechanism. ElasticNet essentially predicts that each person will revert toward their chronic CES-D level, with the magnitude of predicted change proportional to their current displacement from baseline
+5. MixedLM outperforms ElasticNet (MAE 3.80 vs 4.13, W-R² 0.389 vs 0.186), where the random intercept likely captures person-level structure more flexibly
+6. For clinical flagging, classification substantially outperforms regression-as-classifier -- dedicated classifiers trained on clinical boundaries are the appropriate tool for worsening detection
