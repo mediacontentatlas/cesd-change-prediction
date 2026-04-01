@@ -10,6 +10,11 @@ cd regression/elasticnet
 # Run ALL 11 conditions end-to-end (train + posthoc + performer tiers):
 python scripts/run_all_conditions.py
 
+# Generate report figures/tables after all conditions are done:
+python scripts/build_report.py
+
+# Other examples of runs:
+
 # Dry run (see commands without executing):
 python scripts/run_all_conditions.py --dry-run
 
@@ -21,9 +26,6 @@ python scripts/run_all_conditions.py --skip-plots
 
 # Rebuild summary CSV from existing outputs (no retraining):
 python scripts/run_all_conditions.py --summary-only
-
-# Generate report figures/tables after all conditions are done:
-python scripts/build_report.py
 ```
 
 ## Feature Ablation Conditions
@@ -66,7 +68,7 @@ Hyperparameters are locked after step 1. The orchestrator then runs:
 | Script | Purpose |
 |---|---|
 | `scripts/train_elasticnet.py` | Train a single condition. Called by the orchestrator. |
-| `scripts/posthoc_direction.py` | Direction analysis using classification labels. |
+| `scripts/posthoc_direction.py` | Direction analysis using classification labels. Called by the orchestrator. |
 | `scripts/run_all_conditions.py` | Top-level orchestrator. Runs train + posthoc + performer for each condition. |
 | `scripts/build_report.py` | Generate slide-ready figures and tables from all outputs. |
 
@@ -132,9 +134,9 @@ reports/                          # Slide-ready figures and tables
 
 Three label types are evaluated in the posthoc direction analysis:
 
-- **`sev_crossing` (primary):** Clinical severity boundary crossing based on CES-D thresholds at 16 and 24. This is the primary label type because it tests clinically meaningful boundary crossings.
-- **`personal_sd` (sensitivity analysis):** Person-specific SD-based thresholds (k = 1.0). Tests whether the regression captures within-person dynamics relative to each person's typical variability.
-- **`balanced_tercile` (supplementary, reported but not emphasized):** Rank-based equal thirds. Included for completeness but not emphasized in the main results because predicting these labels only requires correct rank ordering of predictions, not accurate magnitude estimates -- a weaker test than what continuous regression metrics (MAE, within-person R²) already measure directly. It also artificially inflates direction accuracy without clinical meaning.
+- **`sev_crossing`:** Clinical severity boundary crossing based on CES-D thresholds at 16 and 24. This is the primary label type because it tests clinically meaningful boundary crossings.
+- **`personal_sd`:** Person-specific SD-based thresholds (k = 1.0). Tests whether the regression captures within-person dynamics relative to each person's typical variability.
+- **`balanced_tercile`:** Rank-based equal thirds. Included for completeness but not emphasized in the main results because predicting these labels only requires correct rank ordering of predictions, not accurate magnitude estimates -- a weaker test than what continuous regression metrics (MAE, within-person R²) already measure directly. It also artificially inflates direction accuracy without clinical meaning.
 
 All three are run by the orchestrator and saved to `regression/posthoc/elasticnet/<condition>/<label_type>/`. The main results report (`reports/elasticnet_results.md`) includes `balanced_tercile` tables in Section 10 for completeness.
 
