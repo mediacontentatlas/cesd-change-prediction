@@ -1,0 +1,25 @@
+alpha: 0.001
+best_val_mae: 3.9205782871757435
+condition: pheno_pid
+l1_ratio: 0.1
+max_iter: 10000
+metrics:
+  test:
+    between_r2: -0.6728400083178403
+    mae: 4.058926703917925
+    rmse: 6.1269877537518775
+    within_r2: 0.2192141164861806
+  train:
+    between_r2: 0.4908223230084706
+    mae: 3.783938512288123
+    rmse: 5.669610776375128
+    within_r2: 0.373865622124844
+  val:
+    between_r2: -1.9536409406747364
+    mae: 3.9205782871757435
+    rmse: 5.672621654230346
+    within_r2: 0.1752974120090961
+n_features: 122
+n_test_samples: 411
+n_trainval_samples: 1591
+trained_on: train+val

@@ -1,0 +1,34 @@
+======================================================================
+POST-HOC DIRECTION ANALYSIS: ElasticNet (pid) (pid)
+Label type: personal_sd
+Run: 20260331_153523
+======================================================================
+
+CONFIG
+  Label type:  personal_sd
+  Condition:   pid
+  Data dir:    C:\GitHubRepos\cesd-change-prediction\data\processed
+  Labels dir:  C:\GitHubRepos\cesd-change-prediction\classification\labels\personal_sd
+
+STRATIFIED REGRESSION ERROR (VAL)
+  Direction            N       MAE      RMSE      Bias
+  improving           36     5.856     7.104    +5.809
+  stable             309     2.909     4.151    +0.750
+  worsening           50     8.827    10.474    -8.792
+
+STRATIFIED REGRESSION ERROR (TEST)
+  Direction            N       MAE      RMSE      Bias
+  improving           50     8.081     9.529    +7.635
+  stable             320     2.766     3.982    +0.919
+  worsening           41     9.522    12.021    -9.522
+
+CLASSIFICATION METRICS
+   Split    BalAcc       AUC    Sens-W     PPV-W
+     val    0.4672    0.7011    0.0400    0.1818
+    test    0.4279    0.7551    0.0488    0.2500
+  (BalAcc chance = 0.333, AUC chance = 0.500)
+
+DIRECTION ACCURACY (median per-person)
+  Val:  0.8000
+  Test: 0.8000
+======================================================================

@@ -1,0 +1,25 @@
+alpha: 10.0
+best_val_mae: 3.9238134343541007
+condition: base_lag_pmcesd
+l1_ratio: 0.1
+max_iter: 10000
+metrics:
+  test:
+    between_r2: -0.18127982743765525
+    mae: 4.1265284734137
+    rmse: 6.283054257909088
+    within_r2: 0.18573196243039503
+  train:
+    between_r2: -0.38004951069083237
+    mae: 3.9011614498699396
+    rmse: 5.9972987742958415
+    within_r2: 0.33582247808908433
+  val:
+    between_r2: -1.3407782749285135
+    mae: 3.9238134343541007
+    rmse: 5.731631615268827
+    within_r2: 0.2394881718521118
+n_features: 39
+n_test_samples: 411
+n_trainval_samples: 1591
+trained_on: train+val

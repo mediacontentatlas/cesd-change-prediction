@@ -158,7 +158,7 @@ Five baselines are computed on the training set and applied identically to val a
 
 ### 6.1 Test set -- required conditions
 
-| Condition | N feat | Retained | MAE | RMSE | R² | W-R² (med) |
+| Condition | N feat | Retained | Test MAE | Test RMSE | Test R² | Test W-R² (med) |
 |---|---|---|---|---|---|---|
 | `prior_cesd` | 1 | 1 | 4.58 | 7.39 | -0.006 | -0.042 |
 | `base` | 21 | 1 | 4.58 | 7.39 | -0.006 | -0.042 |
@@ -169,14 +169,14 @@ The first three conditions collapse to an identical prior_cesd-only model. Elast
 
 ### 6.2 Validation set -- required conditions
 
-| Condition | N feat | MAE | RMSE | R² | W-R² (med) |
+| Condition | N feat | Val MAE | Val RMSE | Val R² | Val W-R² (med) |
 |---|---|---|---|---|---|
 | collapsed (prior_cesd / base / base_lag) | 1 | 4.29 | 6.57 | -0.001 | -0.018 |
 | **`base_lag_pmcesd`** | **39** | **3.92** | **5.73** | **0.249** | **0.239** |
 
 ### 6.3 Training set -- required conditions
 
-| Condition | N feat | MAE | RMSE | R² | W-R² (med) |
+| Condition | N feat | Train MAE | Train RMSE | Train R² | Train W-R² (med) |
 |---|---|---|---|---|---|
 | collapsed (prior_cesd / base / base_lag) | 1 | 4.65 | 7.34 | 0.000 | 0.019 |
 | **`base_lag_pmcesd`** | **39** | **3.90** | **6.00** | **0.348** | **0.336** |
@@ -198,17 +198,17 @@ Sorted by Val MAE (selection criterion). Conditions marked with `*` are required
 
 | Condition | Group | N feat | Retained | Train MAE | Val MAE | Test MAE | Test W-R² (med) | Test AUC | Test BalAcc |
 |---|---|---|---|---|---|---|---|---|---|
-| pheno_pid | extra | 122 | 120 | 3.78 | 3.92 | **4.06** | **0.219** | 0.723 | 0.579 |
-| base_lag_pmcesd* | req | 39 | 2 | 3.90 | **3.92** | 4.13 | 0.186 | 0.722 | 0.540 |
-| pid | extra | 117 | 101 | 3.78 | 3.93 | 4.09 | 0.204 | 0.715 | 0.602 |
-| dev_pid | extra | 125 | 107 | 3.78 | 3.95 | 4.10 | 0.185 | 0.715 | 0.603 |
-| dev_pheno_pid | extra | 130 | 111 | 3.77 | 3.97 | 4.10 | 0.191 | 0.717 | 0.593 |
-| prior_cesd* | req | 1 | 1 | 4.65 | 4.29 | 4.58 | -0.042 | 0.678 | 0.403 |
-| base* | req | 21 | 1 | 4.65 | 4.29 | 4.58 | -0.042 | 0.678 | 0.403 |
-| base_lag* | req | 38 | 1 | 4.65 | 4.29 | 4.58 | -0.042 | 0.678 | 0.403 |
-| dev | extra | 29 | 1 | 4.65 | 4.29 | 4.58 | -0.042 | 0.678 | 0.403 |
-| pheno | extra | 26 | 1 | 4.65 | 4.29 | 4.58 | -0.042 | 0.678 | 0.403 |
-| dev_pheno | extra | 34 | 1 | 4.65 | 4.29 | 4.58 | -0.042 | 0.678 | 0.403 |
+| pheno_pid | extra | 122 | 120 | 3.7839 | **3.9206** | **4.0589** | **0.2192** | **0.7228** | 0.5789 |
+| base_lag_pmcesd* | req | 39 | 2 | 3.9012 | 3.9238 | 4.1265 | 0.1857 | 0.7220 | 0.5397 |
+| pid | extra | 117 | 101 | 3.7777 | 3.9268 | 4.0870 | 0.2038 | 0.7154 | 0.6016 |
+| dev_pid | extra | 125 | 107 | 3.7799 | 3.9503 | 4.0998 | 0.1845 | 0.7151 | 0.6026 |
+| dev_pheno_pid | extra | 130 | 111 | 3.7746 | 3.9679 | 4.0974 | 0.1906 | 0.7165 | 0.5930 |
+| prior_cesd* | req | 1 | 1 | 4.6488 | 4.2889 | 4.5841 | -0.0422 | 0.6780 | 0.4030 |
+| base* | req | 21 | 1 | 4.6488 | 4.2889 | 4.5841 | -0.0422 | 0.6780 | 0.4030 |
+| base_lag* | req | 38 | 1 | 4.6488 | 4.2889 | 4.5841 | -0.0422 | 0.6780 | 0.4030 |
+| dev | extra | 29 | 1 | 4.6488 | 4.2889 | 4.5841 | -0.0422 | 0.6780 | 0.4030 |
+| pheno | extra | 26 | 1 | 4.6488 | 4.2889 | 4.5841 | -0.0422 | 0.6780 | 0.4030 |
+| dev_pheno | extra | 34 | 1 | 4.6488 | 4.2889 | 4.5841 | -0.0422 | 0.6780 | 0.4030 |
 
 Direction metrics are from posthoc sev_crossing analysis. AUC = OvR macro, BalAcc = macro recall over 3 classes (improving / stable / worsening).
 
@@ -220,17 +220,17 @@ Direction metrics are from posthoc sev_crossing analysis. AUC = OvR macro, BalAc
 
 3. Person-level information is critical for improving prediction, as the top 5 feature-set conditions all include PID one-hot encoding or person_mean_cesd
 
-4. `base_lag_pmcesd` wins on Val MAE despite using far fewer parameters (2 retained features vs. 100+ for PID-based conditions). `pheno_pid` achieves the best Test MAE (4.06) and Test W-R² (0.219) by learning person-specific intercepts, but at the cost of 120 parameters for 96 persons.
+4. `pheno_pid` ranks first on Val MAE (3.9206 vs. 3.9238), Test MAE (4.0589 vs. 4.1265), and Test W-R² (0.2192 vs. 0.1857) -- beating `base_lag_pmcesd` on every metric. However, `pheno_pid` learns 120 person-specific intercepts for 96 participants, that is, it memorizes individual identities and cannot generalize to unseen persons. `base_lag_pmcesd` instead uses `person_mean_cesd`, a transferable summary statistic computable for any new person with prior CES-D history. The performance gap is small (Delta Test MAE = 0.0676), and `base_lag_pmcesd` is the only top-performing model whose predictions generalize beyond this specific sample. We report `base_lag_pmcesd` as the primary required-condition model for comparability with the classification task's 39-feature specification.
 
-5. Val-to-test generalization is stable across conditions. For the best model (`base_lag_pmcesd`), Delta MAE = +0.21 from val to test (see Section 6.4), indicating no severe overfitting despite the Train+Val refit in Phase 3.
+5. Val-to-test generalization is stable across conditions. For `base_lag_pmcesd`, Delta MAE = +0.21 from val to test (see Section 6.4), indicating no severe overfitting despite the Train+Val refit in Phase 3.
 
 ---
 
 ## 8. Baseline Comparison
 
-### 8.1 Best model (`base_lag_pmcesd`) vs. all baselines -- test set
+### 8.1 `base_lag_pmcesd` vs. all baselines -- test set
 
-| Method | MAE | RMSE | R² | W-R² (med) | Median Person MAE | Q1 MAE | Q3 MAE |
+| Method | Test MAE | Test RMSE | Test R² | Test W-R² (med) | Median Person MAE | Q1 MAE | Q3 MAE |
 |---|---|---|---|---|---|---|---|
 | **ElasticNet (base_lag_pmcesd)** | **4.13** | **6.28** | **0.279** | **0.186** | **3.18** | **1.62** | **5.01** |
 | B0: No Change | 4.60 | 7.42 | -0.006 | -0.044 | 2.78 | 1.60 | 6.05 |
@@ -241,8 +241,8 @@ Direction metrics are from posthoc sev_crossing analysis. AUC = OvR macro, BalAc
 
 ### 8.2 Improvement over baselines
 
-| Comparison | Delta MAE | Delta W-R² |
-|---|---|---|---|
+| Comparison | Delta Test MAE | Delta Test W-R² |
+|---|---|---|
 | vs. B0 (No Change) | -0.47 | +0.230 |
 | vs. B1 (Population Mean) | -0.49 | +0.235 |
 | vs. B3 (Person-Specific Mean) | -0.64 | +0.266 |
@@ -361,7 +361,7 @@ The model predicts the **stable** class well (MAE 1.5-2.7, near-zero bias) but s
 
 ### 10.3 Best regression model vs. classification models (sev_crossing, test set)
 
-| Model Type | Model | AUC (OvR) | BalAcc | Sens-W | PPV-W |
+| Model Type | Model | Test AUC (OvR) | Test BalAcc | Test Sens-W | Test PPV-W |
 |---|---|---|---|---|---|
 | **Classification** | XGBoost (39 feat) | **0.906** | **0.834** | **0.838** | **0.356** |
 | Classification | LightGBM (39 feat) | 0.901 | 0.842 | 0.865 | 0.344 |

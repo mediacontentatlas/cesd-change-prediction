@@ -1,0 +1,19 @@
+alpha: 0.005
+best_val_mae: 3.9267602194779205
+condition: pid
+l1_ratio: 0.99
+max_iter: 10000
+metrics:
+  train:
+    between_r2: 0.5976280761869228
+    mae: 3.7776659595317215
+    rmse: 5.644350925042873
+    within_r2: 0.3899555467579136
+  val:
+    between_r2: -2.010056770022824
+    mae: 3.9267602194779205
+    rmse: 5.653781457326683
+    within_r2: 0.22111379042612733
+n_features: 117
+n_train_samples: 1196
+trained_on: train

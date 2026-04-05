@@ -1,0 +1,25 @@
+alpha: 0.005
+best_val_mae: 3.950270026074569
+condition: dev_pid
+l1_ratio: 0.99
+max_iter: 10000
+metrics:
+  test:
+    between_r2: -0.8470557770606248
+    mae: 4.099790237923194
+    rmse: 6.164614484609018
+    within_r2: 0.18450739373591774
+  train:
+    between_r2: 0.5976714985031942
+    mae: 3.7798810239102787
+    rmse: 5.640783560688549
+    within_r2: 0.37832943076646824
+  val:
+    between_r2: -2.104970168179665
+    mae: 3.950270026074569
+    rmse: 5.683381226960634
+    within_r2: 0.217049000005629
+n_features: 125
+n_test_samples: 411
+n_trainval_samples: 1591
+trained_on: train+val

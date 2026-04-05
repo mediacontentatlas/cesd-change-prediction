@@ -1,0 +1,19 @@
+alpha: 50.0
+best_val_mae: 4.288858049673944
+condition: dev_pheno
+l1_ratio: 0.5
+max_iter: 10000
+metrics:
+  train:
+    between_r2: -0.04584105033892638
+    mae: 4.648811898506868
+    rmse: 7.339559543178646
+    within_r2: 0.018576548832532236
+  val:
+    between_r2: -0.11715782228561378
+    mae: 4.288858049673944
+    rmse: 6.568311384512891
+    within_r2: -0.018209782851069223
+n_features: 34
+n_train_samples: 1196
+trained_on: train

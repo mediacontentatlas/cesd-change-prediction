@@ -1,0 +1,12 @@
+condition,group,description,n_features,n_nonzero
+prior_cesd,required,prior_cesd only (1 feature),1,1
+base,required,All 21 base features,21,1
+pheno,extra,Base + 5 phenotype features,26,1
+dev,extra,Base + 8 within-person deviation features,29,1
+dev_pheno,extra,Base + dev + pheno,34,1
+base_lag,required,Base + 17 behavioral lag (38 cols),38,1
+base_lag_pmcesd,required,Base + lag + person_mean_cesd (39 cols),39,2
+pid,extra,Base + ~96 PID one-hot features,117,101
+pheno_pid,extra,Base + pheno + PID OHE,122,120
+dev_pid,extra,Base + dev + PID OHE,125,107
+dev_pheno_pid,extra,Base + dev + pheno + PID OHE,130,111

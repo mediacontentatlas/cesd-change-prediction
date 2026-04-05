@@ -1,0 +1,34 @@
+======================================================================
+POST-HOC DIRECTION ANALYSIS: ElasticNet (pid) (pid)
+Label type: sev_crossing
+Run: 20260331_164221
+======================================================================
+
+CONFIG
+  Label type:  sev_crossing
+  Condition:   pid
+  Data dir:    C:\GitHubRepos\cesd-change-prediction\data\processed
+  Labels dir:  C:\GitHubRepos\cesd-change-prediction\classification\labels\sev_crossing
+
+STRATIFIED REGRESSION ERROR (VAL)
+  Direction            N       MAE      RMSE      Bias
+  improving           36     5.777     7.187    +5.738
+  stable             324     3.224     4.776    +0.273
+  worsening           35     8.524     9.821    -8.398
+
+STRATIFIED REGRESSION ERROR (TEST)
+  Direction            N       MAE      RMSE      Bias
+  improving           44     8.899    10.730    +8.899
+  stable             330     2.843     4.050    +0.708
+  worsening           37     9.462    11.696    -9.183
+
+CLASSIFICATION METRICS
+   Split    BalAcc       AUC    Sens-W     PPV-W
+     val    0.6215    0.7375    0.2286    0.5000
+    test    0.6016    0.7154    0.2973    0.5500
+  (BalAcc chance = 0.333, AUC chance = 0.500)
+
+DIRECTION ACCURACY (median per-person)
+  Val:  1.0000
+  Test: 1.0000
+======================================================================

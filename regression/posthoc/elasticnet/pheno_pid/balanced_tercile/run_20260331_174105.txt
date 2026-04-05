@@ -1,0 +1,34 @@
+======================================================================
+POST-HOC DIRECTION ANALYSIS: ElasticNet (pheno_pid) (pheno_pid)
+Label type: balanced_tercile
+Run: 20260331_174105
+======================================================================
+
+CONFIG
+  Label type:  balanced_tercile
+  Condition:   pheno_pid
+  Data dir:    C:\GitHubRepos\cesd-change-prediction\data\processed
+  Labels dir:  C:\GitHubRepos\cesd-change-prediction\classification\labels\balanced_tercile
+
+STRATIFIED REGRESSION ERROR (VAL)
+  Direction            N       MAE      RMSE      Bias
+  improving          131     4.327     5.558    +3.734
+  stable             131     1.971     2.887    +0.911
+  worsening          133     5.441     7.545    -4.654
+
+STRATIFIED REGRESSION ERROR (TEST)
+  Direction            N       MAE      RMSE      Bias
+  improving          137     5.716     7.372    +5.291
+  stable             137     1.877     2.571    +1.076
+  worsening          137     4.584     7.188    -4.214
+
+CLASSIFICATION METRICS
+   Split    BalAcc       AUC    Sens-W     PPV-W
+     val    0.5394    0.7058    0.5113    0.5113
+    test    0.5207    0.6888    0.5255    0.5255
+  (BalAcc chance = 0.333, AUC chance = 0.500)
+
+DIRECTION ACCURACY (median per-person)
+  Val:  0.5000
+  Test: 0.5000
+======================================================================
